@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.12
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.11...v0.0.12)
+
+### 🩹 Fixes
+
+- Html report ([fc6110c](https://github.com/laoer536/minip/commit/fc6110c))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.11
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.10...v0.0.11)
