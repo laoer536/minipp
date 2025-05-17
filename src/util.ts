@@ -6,8 +6,8 @@ import * as t from '@babel/types'
 
 interface DependencyNode {
   path: string
-  dependencies: string[] // 该文件引用的其他文件
-  dependents: string[] // 引用该文件的其他文件
+  imports: string[] // 该文件引用的其他文件
+  importBy: string[] // 引用该文件的其他文件
   type: string
 }
 
@@ -27,7 +27,7 @@ interface PathMapping {
   paths: string[]
 }
 
-class Util {
+class DependencyTreeGenerator {
   private readonly supportedExtensions: string[]
   private readonly ignoreDirs: string[]
   private readonly projectRoot: string
@@ -155,8 +155,8 @@ class Util {
     // 添加节点
     this.tree.nodes.push({
       path: relativePath,
-      dependencies: [],
-      dependents: [],
+      imports: [],
+      importBy: [],
       type: ext,
     })
 
@@ -263,14 +263,14 @@ class Util {
 
     // 添加正向依赖
     const fromNode = this.tree.nodes.find((node) => node.path === fromRelative)
-    if (fromNode && !fromNode.dependencies.includes(toRelative)) {
-      fromNode.dependencies.push(toRelative)
+    if (fromNode && !fromNode.imports.includes(toRelative)) {
+      fromNode.imports.push(toRelative)
     }
 
     // 添加反向依赖
     const toNode = this.tree.nodes.find((node) => node.path === toRelative)
-    if (toNode && !toNode.dependents.includes(fromRelative)) {
-      toNode.dependents.push(fromRelative)
+    if (toNode && !toNode.importBy.includes(fromRelative)) {
+      toNode.importBy.push(fromRelative)
     }
   }
 
@@ -339,8 +339,8 @@ class Util {
       title: `
         文件路径: ${node.path}
         类型: ${node.type}
-        依赖文件数: ${node.dependencies.length}
-        被引用次数: ${node.dependents.length}
+        依赖文件数: ${node.imports.length}
+        被引用次数: ${node.importBy.length}
       `,
       group: node.type,
     }))
@@ -354,13 +354,53 @@ class Util {
       <!DOCTYPE html>
       <html>
       <head>
+        <meta charset="UTF-8">
         <title>项目依赖树</title>
         <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
         <style>
+          body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+          }
+          .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+          }
+          .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+          }
+          .view-toggle {
+            display: flex;
+            gap: 10px;
+          }
+          .view-toggle button {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+          }
+          .view-toggle button.active {
+            background: #007bff;
+            color: white;
+            border-color: #0056b3;
+          }
           #mynetwork {
             width: 100%;
-            height: 100vh;
+            height: calc(100vh - 100px);
             border: 1px solid lightgray;
+          }
+          #list-view {
+            width: 100%;
+            height: calc(100vh - 100px);
+            border: 1px solid lightgray;
+            overflow: auto;
+            display: none;
           }
           .info-panel {
             position: fixed;
@@ -372,16 +412,57 @@ class Util {
             border-radius: 4px;
             max-width: 300px;
             display: none;
+            z-index: 1000;
+          }
+          .file-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+          }
+          .file-item:hover {
+            background: #f5f5f5;
+          }
+          .file-item .file-name {
+            font-weight: bold;
+          }
+          .file-item .file-path {
+            color: #666;
+            font-size: 0.9em;
+          }
+          .file-item .file-deps {
+            margin-top: 5px;
+            font-size: 0.9em;
+          }
+          .file-item .file-deps span {
+            display: inline-block;
+            margin-right: 10px;
+            color: #007bff;
           }
         </style>
       </head>
       <body>
-        <div id="mynetwork"></div>
-        <div id="info-panel" class="info-panel"></div>
+        <div class="container">
+          <div class="header">
+            <h1>项目依赖树</h1>
+            <div class="view-toggle">
+              <button onclick="switchView('graph', event)" class="active">图形视图</button>
+              <button onclick="switchView('list', event)">列表视图</button>
+            </div>
+          </div>
+          <div id="mynetwork"></div>
+          <div id="list-view"></div>
+          <div id="info-panel" class="info-panel"></div>
+        </div>
         <script type="text/javascript">
+          // 简单的 path.basename 实现
+          function getBasename(path) {
+            return path.split('/').pop().split('\\\\').pop();
+          }
+
           const nodes = new vis.DataSet(${JSON.stringify(nodes)});
           const edges = new vis.DataSet(${JSON.stringify(edges)});
           const container = document.getElementById('mynetwork');
+          const listView = document.getElementById('list-view');
           const infoPanel = document.getElementById('info-panel');
           const data = { nodes, edges };
           const options = {
@@ -413,6 +494,71 @@ class Util {
           network.on('blurNode', function() {
             infoPanel.style.display = 'none';
           });
+
+          function switchView(view, event) {
+            const graphView = document.getElementById('mynetwork');
+            const listView = document.getElementById('list-view');
+            const buttons = document.querySelectorAll('.view-toggle button');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (view === 'graph') {
+              graphView.style.display = 'block';
+              listView.style.display = 'none';
+            } else {
+              graphView.style.display = 'none';
+              listView.style.display = 'block';
+              renderListView();
+            }
+          }
+
+          function renderListView() {
+            const listView = document.getElementById('list-view');
+            listView.innerHTML = '';
+            
+            const nodesArray = nodes.get();
+            const edgesArray = edges.get();
+            
+            nodesArray.forEach(node => {
+              const deps = edgesArray.filter(edge => edge.from === node.id);
+              const dependents = edgesArray.filter(edge => edge.to === node.id);
+              
+              const div = document.createElement('div');
+              div.className = 'file-item';
+              div.innerHTML = \`
+                <div class="file-name">\${getBasename(node.id)}</div>
+                <div class="file-path">\${node.id}</div>
+                <div class="file-deps">
+                  <span>依赖: \${deps.length}</span>
+                  <span>被引用: \${dependents.length}</span>
+                  <span>类型: \${node.group}</span>
+                </div>
+              \`;
+              
+              div.onclick = () => {
+                const depsList = deps.map(edge => {
+                  const depNode = nodes.get(edge.to);
+                  return \`<div class="file-item">
+                    <div class="file-name">\${getBasename(depNode.id)}</div>
+                    <div class="file-path">\${depNode.id}</div>
+                  </div>\`;
+                }).join('');
+                
+                infoPanel.innerHTML = \`
+                  <h3>文件依赖</h3>
+                  \${depsList}
+                \`;
+                infoPanel.style.display = 'block';
+              };
+              
+              listView.appendChild(div);
+            });
+          }
+
+          // 初始化显示图形视图
+          document.getElementById('mynetwork').style.display = 'block';
+          document.getElementById('list-view').style.display = 'none';
         </script>
       </body>
       </html>
@@ -420,4 +566,4 @@ class Util {
   }
 }
 
-export default Util
+export default DependencyTreeGenerator

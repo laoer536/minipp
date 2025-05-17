@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import path from 'path'
-import Util from './util'
+import DependencyTreeGenerator from './util'
 
 interface CliOptions {
   ignoreDirs?: string[]
@@ -48,7 +48,7 @@ async function main() {
   }
 
   // 创建依赖树生成器实例
-  const generator = new Util(projectRoot, options)
+  const generator = new DependencyTreeGenerator(projectRoot, options)
 
   // 生成 HTML 报告
   const htmlOutputPath = path.join(projectRoot, 'dependency-tree.html')
