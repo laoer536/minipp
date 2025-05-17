@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.10
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.9...v0.0.10)
+
+### 📖 Documentation
+
+- Rename project ([d30fa1c](https://github.com/laoer536/minip/commit/d30fa1c))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.9
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.6...v0.0.9)
