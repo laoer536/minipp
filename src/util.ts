@@ -27,7 +27,7 @@ interface PathMapping {
   paths: string[]
 }
 
-class DependencyTreeGenerator {
+class Util {
   private readonly supportedExtensions: string[]
   private readonly ignoreDirs: string[]
   private readonly projectRoot: string
@@ -420,4 +420,4 @@ class DependencyTreeGenerator {
   }
 }
 
-export default DependencyTreeGenerator
+export default Util

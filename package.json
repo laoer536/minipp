@@ -1,6 +1,6 @@
 {
   "name": "minip",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "bin": {
     "minip": "./dist/index.js"
