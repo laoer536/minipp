@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.11
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.10...v0.0.11)
+
+### 🩹 Fixes
+
+- Run cli error ([c6e7695](https://github.com/laoer536/minip/commit/c6e7695))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.10
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.9...v0.0.10)
