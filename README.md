@@ -1,4 +1,4 @@
-# minip
+# minipp
 
 A tool for generating dependency trees for frontend projects, capable of creating visual dependency graphs and detailed JSON reports.
 
@@ -72,36 +72,41 @@ A tool for generating dependency trees for frontend projects, capable of creatin
    - May have false positives or false negatives
    - No support for complex build-time configurations
 
+## Download
+```bash
+npm install minipp -g
+```
+
 ## Usage
 
 ### Basic Usage
 ```bash
-npm start
+minipp
 ```
 
 ### Specify Project Path
 ```bash
-npm start /path/to/your/project
+minipp /path/to/your/project
 ```
 
 ### Configure Ignored Directories
 ```bash
-npm start --ignore node_modules,dist,coverage
+minipp --ignore node_modules,dist,coverage
 ```
 
 ### Configure Supported File Types
 ```bash
-npm start --extensions ts,tsx,js,jsx,css
+minipp --extensions ts,tsx,js,jsx,css
 ```
 
 ### Specify TypeScript Configuration
 ```bash
-npm start --tsconfig ./tsconfig.json
+minipp --tsconfig ./tsconfig.json
 ```
 
 ### Combined Usage
 ```bash
-npm start /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx --tsconfig ./tsconfig.json
+minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx --tsconfig ./tsconfig.json
 ```
 
 ## TypeScript Path Mapping Support

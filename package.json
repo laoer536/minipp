@@ -1,9 +1,9 @@
 {
-  "name": "minip",
+  "name": "minipp",
   "version": "0.0.9",
   "description": "A tool for generating dependency trees for frontend projects, capable of creating visual dependency graphs and detailed JSON reports.",
   "bin": {
-    "minip": "./dist/index.js"
+    "minipp": "./dist/index.js"
   },
   "files": [
     "dist"

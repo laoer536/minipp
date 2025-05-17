@@ -1,4 +1,4 @@
-# minip
+# minipp
 
 这是一个用于生成前端项目依赖关系树的工具，可以生成可视化的依赖关系图和详细的 JSON 报告。
 
@@ -72,36 +72,41 @@
    - 可能存在误报或漏报的情况
    - 不支持复杂的构建时配置
 
+## 下载
+```bash
+npm install minipp -g
+```
+
 ## 使用方法
 
 ### 基本用法
 ```bash
-npm start
+minipp
 ```
 
 ### 指定项目路径
 ```bash
-npm start /path/to/your/project
+minipp /path/to/your/project
 ```
 
 ### 配置忽略目录
 ```bash
-npm start --ignore node_modules,dist,coverage
+minipp --ignore node_modules,dist,coverage
 ```
 
 ### 配置支持的文件类型
 ```bash
-npm start --extensions ts,tsx,js,jsx,css
+minipp --extensions ts,tsx,js,jsx,css
 ```
 
 ### 指定 TypeScript 配置文件
 ```bash
-npm start --tsconfig ./tsconfig.json
+minipp --tsconfig ./tsconfig.json
 ```
 
 ### 组合使用
 ```bash
-npm start /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx --tsconfig ./tsconfig.json
+minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx --tsconfig ./tsconfig.json
 ```
 
 ## TypeScript 路径映射支持
