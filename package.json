@@ -1,0 +1,45 @@
+{
+  "name": "minip",
+  "version": "0.0.6",
+  "description": "",
+  "bin": {
+    "minip": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm clean && tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node ./dist/index.js",
+    "clean": "rimraf dist",
+    "lint": "eslint . --ext .ts",
+    "release": "pnpm build && changelogen --release && npm publish && git push --follow-tags"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/types": "^7.27.1",
+    "@types/babel__traverse": "^7.20.7",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "changelogen": "^0.6.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.5.3",
+    "rimraf": "^5.0.5",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.27.2",
+    "@babel/traverse": "^7.27.1",
+    "cheerio": "^1.0.0",
+    "fast-glob": "^3.3.3",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
