@@ -1,14 +1,32 @@
-import { type ImportDeclaration, parse, type TsType } from '@swc/core'
+import { type ImportDeclaration, parse, type TsType, type JSXAttribute } from '@swc/core'
 import ASTVisitor from '@swc/core/Visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
 
 class ImportAnalyzerVisitor extends ASTVisitor {
+  override visitJSXAttribute(node: JSXAttribute) {
+    const { value: nodeValue } = node
+    let mediaPath: string = ''
+    if (nodeValue) {
+      if ('value' in nodeValue) {
+        mediaPath = dealAstAttributeValue(nodeValue.value)
+      }
+      if ('expression' in nodeValue && nodeValue.expression.type === 'StringLiteral') {
+        mediaPath = dealAstAttributeValue(nodeValue.expression.value)
+      }
+      if ('expression' in nodeValue && nodeValue.expression.type === 'TemplateLiteral') {
+        mediaPath = dealAstAttributeValue(nodeValue.expression.quasis[0]?.raw)
+      }
+    }
+    if (mediaPath) {
+      importPaths.add(pathToRealPath(currentFilePath, mediaPath))
+    }
+    return node
+  }
   override visitTsType(node: TsType) {
     return node
   }
-
   override visitImportDeclaration(node: ImportDeclaration) {
     // 提取导入信息
     const modulePath = node.source.value
@@ -20,6 +38,7 @@ class ImportAnalyzerVisitor extends ASTVisitor {
 const importPaths = new Set<string>()
 let currentFilePath = ''
 let projectRootForUse = ''
+let jsLikeFiles: string[] = []
 const importAnalyzerVisitor = new ImportAnalyzerVisitor()
 
 /**
@@ -38,7 +57,8 @@ async function visitCode(code: string) {
 
 export async function jsLike(projectRoot: string) {
   projectRootForUse = projectRoot
-  const jsLikeFiles = await glob('src/**/*.{ts,tsx,js}')
+  jsLikeFiles = await glob('src/**/*.{ts,tsx,js}')
+  console.log('jsLikeFiles', jsLikeFiles)
   for (const jsLikeFile of jsLikeFiles) {
     try {
       currentFilePath = jsLikeFile
@@ -57,7 +77,32 @@ function pathToRealPath(filePath: string, importPath: string) {
   }
   if (importPath.startsWith('../') || importPath.startsWith('./')) {
     const absolutePath = path.resolve(path.dirname(filePath), importPath)
-    return path.relative(projectRootForUse, absolutePath)
+    const relativePathForProject = path.relative(projectRootForUse, absolutePath)
+    return tryToFindFilesWithoutASuffix(relativePathForProject)
   }
   return importPath
+}
+
+function dealAstAttributeValue(value: unknown) {
+  if (value && typeof value === 'string') {
+    return value.trim()
+  }
+  return ''
+}
+
+function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
+  console.log(relativePathForProject)
+  if (jsLikeFiles.includes(`${relativePathForProject}.ts`)) {
+    return `${relativePathForProject}.ts`
+  }
+  if (jsLikeFiles.includes(`${relativePathForProject}/index.ts`)) {
+    return `${relativePathForProject}/index.ts`
+  }
+  if (jsLikeFiles.includes(`${relativePathForProject}.tsx`)) {
+    return `${relativePathForProject}.tsx`
+  }
+  if (jsLikeFiles.includes(`${relativePathForProject}/index.tsx`)) {
+    return `${relativePathForProject}/index.tsx`
+  }
+  return relativePathForProject
 }

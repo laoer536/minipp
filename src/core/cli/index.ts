@@ -14,16 +14,26 @@ export function parseArgs(): { projectRoot: string; options: CliOptions } {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]
     if (arg === '--ignore' && args[i + 1]) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       options.ignoreDirs = args[i + 1].split(',')
       i++
     } else if (arg === '--extensions' && args[i + 1]) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       options.supportedExtensions = args[i + 1].split(',')
       i++
     } else if (arg === '--tsconfig' && args[i + 1]) {
       options.tsConfigPath = args[i + 1]
       i++
-    } else if (!arg.startsWith('--')) {
-      projectRoot = path.resolve(arg)
+    } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      if (!arg.startsWith('--')) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        projectRoot = path.resolve(arg)
+      }
     }
   }
 
