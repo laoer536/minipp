@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.14
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.13...v0.0.14)
+
+### 🩹 Fixes
+
+- Cli published run error ([0e8227c](https://github.com/laoer536/minip/commit/0e8227c))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.13
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.12...v0.0.13)
