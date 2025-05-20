@@ -1,22 +1,25 @@
-import { ImportDeclaration, parse, TsType } from '@swc/core'
+import { type ImportDeclaration, parse, type TsType } from '@swc/core'
 import ASTVisitor from '@swc/core/Visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
 
-const importPaths = new Set<string>()
 class ImportAnalyzerVisitor extends ASTVisitor {
-  visitTsType(node: TsType) {
+  override visitTsType(node: TsType) {
     return node
   }
-  visitImportDeclaration(node: ImportDeclaration) {
+
+  override visitImportDeclaration(node: ImportDeclaration) {
     // 提取导入信息
     const modulePath = node.source.value
-    importPaths.add(modulePath)
+    importPaths.add(pathToRealPath(currentFilePath, modulePath))
     return node
   }
 }
 
+const importPaths = new Set<string>()
+let currentFilePath = ''
+let projectRootForUse = ''
 const importAnalyzerVisitor = new ImportAnalyzerVisitor()
 
 /**
@@ -34,13 +37,27 @@ async function visitCode(code: string) {
 }
 
 export async function jsLike(projectRoot: string) {
+  projectRootForUse = projectRoot
   const jsLikeFiles = await glob('src/**/*.{ts,tsx,js}')
   for (const jsLikeFile of jsLikeFiles) {
     try {
+      currentFilePath = jsLikeFile
       await visitCode(fs.readFileSync(path.join(projectRoot, jsLikeFile), 'utf8'))
     } catch (e) {
       console.error('Failed to visit', jsLikeFile, `error: ${e}`)
     }
   }
   return importPaths
+}
+
+function pathToRealPath(filePath: string, importPath: string) {
+  if (importPath.startsWith('@/')) {
+    // Currently, only standard imports are processed, e.g. "@/components/Card.tsx" will not be processed, "@/components/.. /Card.tsx"
+    return importPath.replace('@/', 'src/') //TODO use from user project
+  }
+  if (importPath.startsWith('../') || importPath.startsWith('./')) {
+    const absolutePath = path.resolve(path.dirname(filePath), importPath)
+    return path.relative(projectRootForUse, absolutePath)
+  }
+  return importPath
 }
