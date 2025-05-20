@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.0.13
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.12...v0.0.13)
+
+### 🚀 Enhancements
+
+- Start collect js-like file imports ([09c434d](https://github.com/laoer536/minip/commit/09c434d))
+- Unbuild for TS bundle ([268bd75](https://github.com/laoer536/minip/commit/268bd75))
+- Ts tsx unused file support ([3b38e00](https://github.com/laoer536/minip/commit/3b38e00))
+
+### 🩹 Fixes
+
+- Build warning ([4ab1835](https://github.com/laoer536/minip/commit/4ab1835))
+
+### 💅 Refactors
+
+- Init ([a61cd1b](https://github.com/laoer536/minip/commit/a61cd1b))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.12
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.11...v0.0.12)
