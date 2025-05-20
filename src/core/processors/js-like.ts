@@ -1,5 +1,5 @@
 import { type ImportDeclaration, parse, type TsType, type JSXAttribute } from '@swc/core'
-import ASTVisitor from '@swc/core/Visitor.js'
+import ASTVisitor from '../visitor/Visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'

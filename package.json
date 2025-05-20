@@ -11,7 +11,7 @@
   "scripts": {
     "build": "unbuild --minify",
     "dev": "tsx src/index.ts",
-    "start": "node ./dist/index.js",
+    "start": "node ./dist/index.mjs",
     "clean": "rimraf dist",
     "lint": "eslint . --ext .ts",
     "release": "pnpm build && changelogen --release && npm publish && git push --follow-tags"
