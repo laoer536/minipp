@@ -3,6 +3,7 @@ import ASTVisitor from '../visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
+import { supportFileTypes } from '../common'
 
 class ImportAnalyzerVisitor extends ASTVisitor {
   override visitJSXAttribute(node: JSXAttribute) {
@@ -72,12 +73,15 @@ export async function jsLike(projectRoot: string) {
 function pathToRealPath(currentFilePath: string, importPath: string) {
   if (importPath.startsWith('@/')) {
     // Currently, only standard imports are processed, e.g. "@/components/Card.tsx" will not be processed, "@/components/.. /Card.tsx"
-    return importPath.replace('@/', 'src/') //TODO use from user project
+    const relativePathForProject = importPath.replace('@/', 'src/') //TODO use from user project
+    return hasFileExtension(relativePathForProject)
+      ? relativePathForProject
+      : tryToFindFilesWithoutASuffix(relativePathForProject)
   }
   if (importPath.startsWith('../') || importPath.startsWith('./')) {
     const absolutePath = path.resolve(path.dirname(currentFilePath), importPath)
     const relativePathForProject = path.relative(projectRootForUse, absolutePath)
-    return !relativePathForProject.endsWith('.d') && hasFileExtension(relativePathForProject)
+    return hasFileExtension(relativePathForProject)
       ? relativePathForProject
       : tryToFindFilesWithoutASuffix(relativePathForProject)
   }
@@ -108,5 +112,6 @@ function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
 }
 
 const hasFileExtension = (filePath: string): boolean => {
-  return path.extname(filePath) !== ''
+  const ext = path.extname(filePath)
+  return supportFileTypes.includes(ext)
 }
