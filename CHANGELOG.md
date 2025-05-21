@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.6
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.5...v0.0.6)
+
+### 🩹 Fixes
+
+- HasFileExtension function should compare dot type ([b187cc1](https://github.com/laoer536/minip/commit/b187cc1))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.5
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.16...v0.0.5)
