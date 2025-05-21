@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v0.0.5
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.16...v0.0.5)
+
+### 🚀 Enhancements
+
+- Processing d.ts files ([10a3f35](https://github.com/laoer536/minip/commit/10a3f35))
+- More accurate identification of resource files ([ad40c73](https://github.com/laoer536/minip/commit/ad40c73))
+- V0.0.3 ([5a69b97](https://github.com/laoer536/minip/commit/5a69b97))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.16
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.15...v0.0.16)
