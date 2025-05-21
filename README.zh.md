@@ -1,6 +1,8 @@
 # minipp
 
-这是一个用于生成前端项目依赖关系树的工具，可以生成可视化的依赖关系图和详细的 JSON 报告。
+快速帮你找到项目中没有被使用的文件，为你的项目瘦身。
+
+⚠️目前仅支持扫描前端react+ts工程化项目，考虑到仅针对源代码文件，忽略项目配置文件，所以不会扫描src目录之外的文件及文件夹。
 
 ## 功能特点
 
@@ -79,7 +81,7 @@ npm install minipp -g
 
 ## 使用方法
 
-### 基本用法
+### 基本用法（在项目根目录下执行）
 ```bash
 minipp
 ```
@@ -89,24 +91,19 @@ minipp
 minipp /path/to/your/project
 ```
 
-### 配置忽略目录
+### 配置忽略目录 (后续支持)
 ```bash
 minipp --ignore node_modules,dist,coverage
 ```
 
-### 配置支持的文件类型
+### 配置支持的文件类型 (后续支持)
 ```bash
 minipp --extensions ts,tsx,js,jsx,css
 ```
 
-### 指定 TypeScript 配置文件
-```bash
-minipp --tsconfig ./tsconfig.json
-```
-
 ### 组合使用
 ```bash
-minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx --tsconfig ./tsconfig.json
+minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx
 ```
 
 ## TypeScript 路径映射支持
@@ -118,9 +115,7 @@ minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,j
    "compilerOptions": {
       "baseUrl": ".",
       "paths": {
-         "@/*": ["./src/*"],
-         "@components/*": ["./src/components/*"],
-         "@utils/*": ["./src/utils/*"]
+         "@/*": ["./src/*"] // Supported by default
       }
    }
 }
@@ -130,19 +125,22 @@ minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,j
 ```typescript
 // 相对路径导入
 import { Button } from './components/Button';
+import { Button } from '../../components/Button';
+import { Button } from '../components/Button';
 
 // 路径别名导入
-import { utils } from '@/utils';
-import { config } from '@config/settings';
+import { utils } from '@/utils'; // will be recognized as "src/utils"
+import { config } from '@config/settings'; //will be identified as an external dependency rather than an on-premises resource
 
 // 从 baseUrl 导入
 import { types } from 'types';
 ```
 
 ### 路径解析规则
-1. 首先检查是否是相对路径（以 `.` 开头）
-2. 然后尝试匹配 `tsconfig.json` 中的路径映射规则
-3. 最后尝试从 `baseUrl` 解析
+1. `@/utils` -> `src/utils`
+2. `./utils` -> 识别为相对于当前文件目录的文件
+3. `../utils` -> 识别为相对于当前文件目录上一级的文件 `'../../utils', '..'`依然支持
+
 
 ## 输出文件
 

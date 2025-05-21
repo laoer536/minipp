@@ -1,6 +1,8 @@
 # minipp
 
-A tool for generating dependency trees for frontend projects, capable of creating visual dependency graphs and detailed JSON reports.
+Quickly help you find files that are not being used in your project, and slim down your project.
+
+⚠️ At present, only front-end react+ts engineering projects are supported, considering that only for source code files and ignoring project configuration files, files and folders outside the src directory will not be scanned.
 
 ## Features
 
@@ -79,7 +81,7 @@ npm install minipp -g
 
 ## Usage
 
-### Basic Usage
+### Basic Usage (Execution at the root directory)
 ```bash
 minipp
 ```
@@ -89,24 +91,20 @@ minipp
 minipp /path/to/your/project
 ```
 
-### Configure Ignored Directories
+### Configure Ignored Directories (TODO)
 ```bash
 minipp --ignore node_modules,dist,coverage
 ```
 
-### Configure Supported File Types
+### Configure Supported File Types (TODO)
 ```bash
 minipp --extensions ts,tsx,js,jsx,css
 ```
 
-### Specify TypeScript Configuration
-```bash
-minipp --tsconfig ./tsconfig.json
-```
 
-### Combined Usage
+### Combined Usage (TODO)
 ```bash
-minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx --tsconfig ./tsconfig.json
+minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx
 ```
 
 ## TypeScript Path Mapping Support
@@ -118,9 +116,7 @@ minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,j
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@/*": ["./src/*"] // Supported by default
     }
   }
 }
@@ -130,19 +126,21 @@ minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,j
 ```typescript
 // Relative path import
 import { Button } from './components/Button';
+import { Button } from '../../components/Button';
+import { Button } from '../components/Button';
 
 // Path alias import
-import { utils } from '@/utils';
-import { config } from '@config/settings';
+import { utils } from '@/utils'; // will be recognized as "src/utils"
+import { config } from '@config/settings'; //will be identified as an external dependency rather than an on-premises resource
 
 // Import from baseUrl
 import { types } from 'types';
 ```
 
 ### Path Resolution Rules
-1. First check if it's a relative path (starts with `.`)
-2. Then try to match path mapping rules in `tsconfig.json`
-3. Finally try to resolve from `baseUrl`
+1. `@/utils` -> `src/utils`
+2. `./utils` -> 识别为相对于当前文件目录的文件
+3. `../utils` -> 识别为相对于当前文件目录上一级的文件 `'../../utils', '..'`依然支持
 
 ## Output Files
 

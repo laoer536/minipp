@@ -1,7 +1,7 @@
 {
   "name": "minipp",
   "version": "0.1.1",
-  "description": "A tool for generating dependency trees for frontend projects, capable of creating visual dependency graphs and detailed JSON reports.",
+  "description": "Quickly help you find files that are not being used in your project, and slim down your project.",
   "bin": {
     "minipp": "./dist/index.mjs"
   },
