@@ -78,7 +78,7 @@ function pathToRealPath(currentFilePath: string, importPath: string) {
       ? relativePathForProject
       : tryToFindFilesWithoutASuffix(relativePathForProject)
   }
-  if (importPath.startsWith('../') || importPath.startsWith('./')) {
+  if (importPath.startsWith('..') || importPath.startsWith('.')) {
     const absolutePath = path.resolve(path.dirname(currentFilePath), importPath)
     const relativePathForProject = path.relative(projectRootForUse, absolutePath)
     return hasFileExtension(relativePathForProject)
@@ -107,6 +107,12 @@ function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
   }
   if (jsLikeFiles.includes(`${relativePathForProject}/index.tsx`)) {
     return `${relativePathForProject}/index.tsx`
+  }
+  if (jsLikeFiles.includes(`${relativePathForProject}.d.ts`)) {
+    return `${relativePathForProject}.d.ts`
+  }
+  if (jsLikeFiles.includes(`${relativePathForProject}/index.d.ts`)) {
+    return `${relativePathForProject}/index.d.ts`
   }
   return `${relativePathForProject}(Unknown file type, the file does not exist in the scan directory, or is not a TSX, TS or .d.ts file)`
 }
