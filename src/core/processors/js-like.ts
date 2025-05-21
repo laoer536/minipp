@@ -58,7 +58,6 @@ async function visitCode(code: string) {
 export async function jsLike(projectRoot: string) {
   projectRootForUse = projectRoot
   jsLikeFiles = await glob('src/**/*.{ts,tsx}')
-  console.log('jsLikeFiles', jsLikeFiles)
   for (const jsLikeFile of jsLikeFiles) {
     try {
       currentFilePath = jsLikeFile
@@ -70,15 +69,15 @@ export async function jsLike(projectRoot: string) {
   return importPaths
 }
 
-function pathToRealPath(filePath: string, importPath: string) {
+function pathToRealPath(currentFilePath: string, importPath: string) {
   if (importPath.startsWith('@/')) {
     // Currently, only standard imports are processed, e.g. "@/components/Card.tsx" will not be processed, "@/components/.. /Card.tsx"
     return importPath.replace('@/', 'src/') //TODO use from user project
   }
   if (importPath.startsWith('../') || importPath.startsWith('./')) {
-    const absolutePath = path.resolve(path.dirname(filePath), importPath)
+    const absolutePath = path.resolve(path.dirname(currentFilePath), importPath)
     const relativePathForProject = path.relative(projectRootForUse, absolutePath)
-    return hasFileExtension(relativePathForProject)
+    return !relativePathForProject.endsWith('.d') && hasFileExtension(relativePathForProject)
       ? relativePathForProject
       : tryToFindFilesWithoutASuffix(relativePathForProject)
   }
@@ -93,20 +92,19 @@ function dealAstAttributeValue(value: unknown) {
 }
 
 function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
-  console.log('relativePathForProject', relativePathForProject)
   if (jsLikeFiles.includes(`${relativePathForProject}.ts`)) {
     return `${relativePathForProject}.ts`
-  }
-  if (jsLikeFiles.includes(`${relativePathForProject}/index.ts`)) {
-    return `${relativePathForProject}/index.ts`
   }
   if (jsLikeFiles.includes(`${relativePathForProject}.tsx`)) {
     return `${relativePathForProject}.tsx`
   }
+  if (jsLikeFiles.includes(`${relativePathForProject}/index.ts`)) {
+    return `${relativePathForProject}/index.ts`
+  }
   if (jsLikeFiles.includes(`${relativePathForProject}/index.tsx`)) {
     return `${relativePathForProject}/index.tsx`
   }
-  return relativePathForProject
+  return `${relativePathForProject}(Unknown file type, the file does not exist in the scan directory, or is not a TSX, TS or .d.ts file)`
 }
 
 const hasFileExtension = (filePath: string): boolean => {
