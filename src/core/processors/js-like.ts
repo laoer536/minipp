@@ -19,7 +19,7 @@ class ImportAnalyzerVisitor extends ASTVisitor {
         mediaPath = dealAstAttributeValue(nodeValue.expression.quasis[0]?.raw)
       }
     }
-    if (mediaPath) {
+    if (hasFileExtension(mediaPath)) {
       importPaths.add(pathToRealPath(currentFilePath, mediaPath))
     }
     return node
@@ -57,7 +57,7 @@ async function visitCode(code: string) {
 
 export async function jsLike(projectRoot: string) {
   projectRootForUse = projectRoot
-  jsLikeFiles = await glob('src/**/*.{ts,tsx,js}')
+  jsLikeFiles = await glob('src/**/*.{ts,tsx}')
   console.log('jsLikeFiles', jsLikeFiles)
   for (const jsLikeFile of jsLikeFiles) {
     try {
@@ -78,7 +78,9 @@ function pathToRealPath(filePath: string, importPath: string) {
   if (importPath.startsWith('../') || importPath.startsWith('./')) {
     const absolutePath = path.resolve(path.dirname(filePath), importPath)
     const relativePathForProject = path.relative(projectRootForUse, absolutePath)
-    return tryToFindFilesWithoutASuffix(relativePathForProject)
+    return hasFileExtension(relativePathForProject)
+      ? relativePathForProject
+      : tryToFindFilesWithoutASuffix(relativePathForProject)
   }
   return importPath
 }
@@ -91,7 +93,7 @@ function dealAstAttributeValue(value: unknown) {
 }
 
 function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
-  console.log(relativePathForProject)
+  console.log('relativePathForProject', relativePathForProject)
   if (jsLikeFiles.includes(`${relativePathForProject}.ts`)) {
     return `${relativePathForProject}.ts`
   }
@@ -105,4 +107,8 @@ function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
     return `${relativePathForProject}/index.tsx`
   }
   return relativePathForProject
+}
+
+const hasFileExtension = (filePath: string): boolean => {
+  return path.extname(filePath) !== ''
 }
