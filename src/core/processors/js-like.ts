@@ -3,7 +3,7 @@ import ASTVisitor from '../visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
-import { supportFileTypes } from '../common'
+import { supportFileTypesWithDot } from '../common'
 
 class ImportAnalyzerVisitor extends ASTVisitor {
   override visitJSXAttribute(node: JSXAttribute) {
@@ -113,5 +113,5 @@ function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
 
 const hasFileExtension = (filePath: string): boolean => {
   const ext = path.extname(filePath)
-  return supportFileTypes.includes(ext)
+  return supportFileTypesWithDot.includes(ext)
 }

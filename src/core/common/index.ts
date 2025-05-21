@@ -18,3 +18,5 @@ export const supportFileTypes = [
   'eot',
   'json',
 ]
+
+export const supportFileTypesWithDot = supportFileTypes.map((fileType) => `.${fileType}`)
