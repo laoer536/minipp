@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.17
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.16...v0.0.17)
+
+### 🚀 Enhancements
+
+- Processing d.ts files ([10a3f35](https://github.com/laoer536/minip/commit/10a3f35))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.16
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.15...v0.0.16)
