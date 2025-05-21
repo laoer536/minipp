@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.1.1
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.5...v0.1.1)
+
+### 🚀 Enhancements
+
+- More accurate identification of relative paths and .d.td file path ([f32096b](https://github.com/laoer536/minip/commit/f32096b))
+
+### 🩹 Fixes
+
+- HasFileExtension function should compare dot type ([b187cc1](https://github.com/laoer536/minip/commit/b187cc1))
+
+### 🏡 Chore
+
+- **release:** V0.0.6 ([311be90](https://github.com/laoer536/minip/commit/311be90))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.6
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.5...v0.0.6)
