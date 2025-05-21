@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.0.16
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.0.15...v0.0.16)
+
+### 🚀 Enhancements
+
+- Visitor add ([e8812da](https://github.com/laoer536/minip/commit/e8812da))
+
+### 🩹 Fixes
+
+- Media file recognition issue ([122b177](https://github.com/laoer536/minip/commit/122b177))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.0.15
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.14...v0.0.15)
