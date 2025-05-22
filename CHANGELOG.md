@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.2
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.1...v0.1.2)
+
+### 🚀 Enhancements
+
+- Support scanning CSS, SCSS, and LESS files for static import of local resources ([a73bb6f](https://github.com/laoer536/minip/commit/a73bb6f))
+
+### 📖 Documentation
+
+- Project information update ([804ac94](https://github.com/laoer536/minip/commit/804ac94))
+- Project information update ([077139c](https://github.com/laoer536/minip/commit/077139c))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.1
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.0.5...v0.1.1)
