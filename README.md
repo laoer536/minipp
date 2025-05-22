@@ -139,8 +139,8 @@ import { types } from 'types';
 
 ### Path Resolution Rules
 1. `@/utils` -> `src/utils`
-2. `./utils` -> 识别为相对于当前文件目录的文件
-3. `../utils` -> 识别为相对于当前文件目录上一级的文件 `'../../utils', '..'`依然支持
+2. `./utils` -> Files that are recognized as relative to the current file directory
+3. `../utils` -> Recognized as a file one level above the current file directory `'../../utils', '..'`still supported
 
 ## Output Files
 
