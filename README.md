@@ -151,27 +151,44 @@ import { types } from 'types';
 - Import information from code files
 - Import information from css, less, scss files
 - Information about unused files
+- Unused dependencies in your code
+- Dependencies that have been used in the code
 
 Example:
 
 ```json
 {
-   "jsLikeImports": [
+   "jsLikePathImports": [
       "src/core/processors/js-like.ts",
       "src/core/processors/style-like.ts",
+      "src/core/common/index.ts",
+      "src/core/cli/index.ts",
+      "src/core/visitor/index.ts"
+   ],
+   "jsLikeDependenceImports": [
       "fs",
       "path",
       "glob",
-      "src/core/common/index.ts",
       "yocto-spinner",
       "util",
-      "src/core/cli/index.ts",
-      "@swc/core",
-      "src/core/visitor/index.ts"
+      "@swc/core"
    ],
    "styleLikeImports": [],
    "unusedFile": [
       "src/index.ts"
+   ],
+   "codeUnusedDependencies": [
+      "@swc/cli",
+      "@types/node",
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "changelogen",
+      "eslint",
+      "prettier",
+      "tsconfig-paths",
+      "tsx",
+      "typescript",
+      "unbuild"
    ]
 }
 ```

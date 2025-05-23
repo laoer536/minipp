@@ -29,7 +29,8 @@ class ImportAnalyzerVisitor extends ASTVisitor {
       }
     }
     if (hasFileExtension(mediaPath)) {
-      importPaths.add(pathToRealPath(currentFilePath, mediaPath))
+      const realPath = pathToRealPath(currentFilePath, mediaPath)
+      realPath.startsWith('src') ? importPaths.add(realPath) : importDependencies.add(realPath)
     }
     return super.visitJSXAttribute(node)
   }
@@ -38,7 +39,8 @@ class ImportAnalyzerVisitor extends ASTVisitor {
   }
   override visitImportDeclaration(node: ImportDeclaration) {
     const modulePath = node.source.value
-    importPaths.add(pathToRealPath(currentFilePath, modulePath))
+    const realPath = pathToRealPath(currentFilePath, modulePath)
+    realPath.startsWith('src') ? importPaths.add(realPath) : importDependencies.add(realPath)
     return super.visitImportDeclaration(node)
   }
   override visitCallExpression(node: CallExpression): Expression {
@@ -46,7 +48,8 @@ class ImportAnalyzerVisitor extends ASTVisitor {
     if (callee.type === 'Import') {
       if (callExpressionArguments[0]?.expression.type === 'StringLiteral') {
         const expression = callExpressionArguments[0].expression
-        importPaths.add(pathToRealPath(currentFilePath, expression.value))
+        const realPath = pathToRealPath(currentFilePath, expression.value)
+        realPath.startsWith('src') ? importPaths.add(realPath) : importDependencies.add(realPath)
       }
     }
     return super.visitCallExpression(node)
@@ -54,6 +57,7 @@ class ImportAnalyzerVisitor extends ASTVisitor {
 }
 
 const importPaths = new Set<string>()
+const importDependencies = new Set<string>()
 let currentFilePath = ''
 let projectRootForUse = ''
 let jsLikeFiles: string[] = []
@@ -84,7 +88,10 @@ export async function jsLike(projectRoot: string) {
       console.error(styleText('red', `Failed to visit:${jsLikeFile},${JSON.stringify(e, null, 2)}`))
     }
   }
-  return importPaths
+  return {
+    importPaths,
+    importDependencies,
+  }
 }
 
 function pathToRealPath(currentFilePath: string, importPath: string) {
@@ -134,7 +141,7 @@ function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
   return `${relativePathForProject}(Unknown file type, the file does not exist in the scan directory, or is not a TSX, TS or .d.ts file)`
 }
 
-const hasFileExtension = (filePath: string): boolean => {
+function hasFileExtension(filePath: string) {
   const ext = path.extname(filePath)
   return supportFileTypesWithDot.includes(ext)
 }

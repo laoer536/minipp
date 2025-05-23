@@ -150,27 +150,44 @@ import { types } from 'types';
 - 代码文件中涉及的导入信息
 - css,less,scss样式文件中涉及的导入信息
 - 未被使用的文件信息
+- 代码中未使用的依赖
+- 代码中已使用的依赖
 
 示例：
 
 ```json
 {
-   "jsLikeImports": [
+   "jsLikePathImports": [
       "src/core/processors/js-like.ts",
       "src/core/processors/style-like.ts",
+      "src/core/common/index.ts",
+      "src/core/cli/index.ts",
+      "src/core/visitor/index.ts"
+   ],
+   "jsLikeDependenceImports": [
       "fs",
       "path",
       "glob",
-      "src/core/common/index.ts",
       "yocto-spinner",
       "util",
-      "src/core/cli/index.ts",
-      "@swc/core",
-      "src/core/visitor/index.ts"
+      "@swc/core"
    ],
    "styleLikeImports": [],
    "unusedFile": [
       "src/index.ts"
+   ],
+   "codeUnusedDependencies": [
+      "@swc/cli",
+      "@types/node",
+      "@typescript-eslint/eslint-plugin",
+      "@typescript-eslint/parser",
+      "changelogen",
+      "eslint",
+      "prettier",
+      "tsconfig-paths",
+      "tsx",
+      "typescript",
+      "unbuild"
    ]
 }
 ```
@@ -182,5 +199,4 @@ import { types } from 'types';
 ## 未来计划
 
 1. 支持 js，jsx解析
-2. 支持同时分析出项目没有用到的外部依赖
-3. 支持 Vue 单文件组件
+2. 支持 Vue 单文件组件
