@@ -51,10 +51,16 @@ function pathToRealPath(currentFilePath: string, importPath: string) {
   if (importPath.startsWith('@/')) {
     //TODO use from user project
     return importPath.replace('@/', 'src/')
-  } else {
-    const absolutePath = path.resolve(path.dirname(currentFilePath), importPath)
-    return path.relative(projectRootForUse, absolutePath)
   }
+  if (importPath.startsWith('~')) {
+    if (importPath.startsWith('~@/')) {
+      return importPath.replace('~@/', 'src/')
+    } else {
+      return `${importPath}(Non-project code file)`
+    }
+  }
+  const absolutePath = path.resolve(path.dirname(currentFilePath), importPath)
+  return path.relative(projectRootForUse, absolutePath)
 }
 
 const hasFileExtension = (filePath: string): boolean => {
