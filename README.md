@@ -200,5 +200,4 @@ Example:
 ## Future Plans
 
 1. Support for js, jsx parsing
-2. Support for analyzing unused external dependencies
-3. Support for Vue single-file components 
+2. Support for Vue single-file components 
