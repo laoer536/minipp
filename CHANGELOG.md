@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.4
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.3...v0.1.4)
+
+### 🩹 Fixes
+
+- Cli process text ([23064e4](https://github.com/laoer536/minip/commit/23064e4))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.3
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.2...v0.1.3)
