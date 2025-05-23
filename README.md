@@ -2,7 +2,9 @@
 
 Quickly help you find unused files in your project to slim down your codebase.
 
-⚠️ Currently only supports scanning frontend React+TS engineering projects. Considering that it only targets source code files and ignores project configuration files, it will not scan files and folders outside the src directory.
+> [!WARNING]
+>
+> ⚠️  At present, it only supports scanning TS projects or front-end react+ts engineering projects, considering that it only targets the source code files and ignores the project configuration files, so it will not scan files and folders outside the src directory.
 
 ## Features
 
@@ -12,7 +14,7 @@ Quickly help you find unused files in your project to slim down your codebase.
 - Media files: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`, `.eot`, `.json`
 
 ### Supported Dependencies
-1. **JavaScript/TypeScript Files**:
+1. **TypeScript/TSX Files**:
    - ES Module `import` statements
    - Static import paths
    - Relative path imports
@@ -24,6 +26,28 @@ Quickly help you find unused files in your project to slim down your codebase.
    - Resource references in `url()` functions
    - Relative path references
    - Path alias references
+
+## Advantages
+
+1. **High Performance**:
+   - Extremely fast analysis speed even for large-scale projects
+   - Optimized file scanning algorithm
+   - Efficient memory usage
+
+2. **Comprehensive Analysis**:
+   - Supports multiple file types (TypeScript, JavaScript, CSS, media files)
+   - Handles various import methods and path aliases
+   - Detailed JSON report output
+
+3. **Developer Friendly**:
+   - Simple command-line interface
+   - Clear and detailed output format
+   - Easy to integrate into existing workflows
+
+4. **Project Optimization**:
+   - Helps identify and remove unused files
+   - Reduces project size
+   - Improves codebase maintainability
 
 ## Limitations
 
@@ -132,23 +156,23 @@ Example:
 
 ```json
 {
-  "jsLikeImports": [
-    "src/core/processors/js-like.ts",
-    "src/core/processors/style-like.ts",
-    "fs",
-    "path",
-    "glob",
-    "src/core/common/index.ts",
-    "yocto-spinner",
-    "util",
-    "src/core/cli/index.ts",
-    "@swc/core",
-    "src/core/visitor/index.ts"
-  ],
-  "styleLikeImports": [],
-  "unusedFile": [
-    "src/index.ts"
-  ]
+   "jsLikeImports": [
+      "src/core/processors/js-like.ts",
+      "src/core/processors/style-like.ts",
+      "fs",
+      "path",
+      "glob",
+      "src/core/common/index.ts",
+      "yocto-spinner",
+      "util",
+      "src/core/cli/index.ts",
+      "@swc/core",
+      "src/core/visitor/index.ts"
+   ],
+   "styleLikeImports": [],
+   "unusedFile": [
+      "src/index.ts"
+   ]
 }
 ```
 

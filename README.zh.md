@@ -2,7 +2,9 @@
 
 快速帮你找到项目中没有被使用的文件，为你的项目瘦身。
 
-⚠️目前仅支持扫描前端react+ts工程化项目，考虑到仅针对源代码文件，忽略项目配置文件，所以不会扫描src目录之外的文件及文件夹。
+> [!WARNING]
+>
+> ⚠️  目前仅支持扫描TS项目或者前端react+ts工程化项目，考虑到仅针对源代码文件，忽略项目配置文件，所以不会扫描src目录之外的文件及文件夹。
 
 ## 功能特点
 
@@ -12,7 +14,7 @@
 - 媒体文件等: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`，`.eot`, `.json`
 
 ### 支持的依赖关系
-1. **JavaScript/TypeScript 文件**:
+1. **TypeScript/TSX 文件**:
    - ES Module 的 `import` 语句
    - 静态导入路径
    - 相对路径导入
@@ -26,9 +28,31 @@
    - 相对路径引用
    - 路径别名引用
 
+## 优势
+
+1. **高性能**：
+   - 即使在大型项目中也能保持极快的分析速度
+   - 优化的文件扫描算法
+   - 高效的内存使用
+
+2. **全面的分析能力**：
+   - 支持多种文件类型（TypeScript、JavaScript、CSS、媒体文件等）
+   - 处理各种导入方法和路径别名
+   - 详细的 JSON 报告输出
+
+3. **开发者友好**：
+   - 简单的命令行界面
+   - 清晰详细的输出格式
+   - 易于集成到现有工作流程
+
+4. **项目优化**：
+   - 帮助识别和删除未使用的文件
+   - 减小项目体积
+   - 提高代码库的可维护性
+
 ## 使用限制
 
-### 不支持的导入方式
+### 不支持被分析的的导入方式
 1. **动态导入**:
    - 不支持模板字符串形式的路径
    - 不支持条件导入
@@ -40,7 +64,7 @@
 
 3. **路径解析**:
    - 不支持运行时动态拼接的路径
-   - 不支持 自定义的路径别名（alias）（目前自动支持以“@/”开头的路径，会以src目录解析）
+   - 不支持 自定义的路径别名（alias）（目前自动支持以"@/"开头的路径，会以src目录解析）
    - 不支持复杂的路径映射规则（如多重通配符）
 
 4. **特殊语法**:
@@ -48,11 +72,7 @@
    - 不支持 Vue 单文件组件的依赖解析
 
 ### 其他限制
-1. **性能考虑**:
-   - 大项目可能需要较长的处理时间
-   - 内存使用量随项目规模增长
-
-2. **准确性**:
+1. **准确性**:
    - 对于工程化项目运行时自动解析加载的文件（没有明确指定被导入使用），解析器不能确定该文件是否被使用（目前统一归类在未被使用的文件中），需要使用者根据自己的框架确定是否需要删除。
 
 ## 下载
@@ -135,23 +155,23 @@ import { types } from 'types';
 
 ```json
 {
-  "jsLikeImports": [
-    "src/core/processors/js-like.ts",
-    "src/core/processors/style-like.ts",
-    "fs",
-    "path",
-    "glob",
-    "src/core/common/index.ts",
-    "yocto-spinner",
-    "util",
-    "src/core/cli/index.ts",
-    "@swc/core",
-    "src/core/visitor/index.ts"
-  ],
-  "styleLikeImports": [],
-  "unusedFile": [
-    "src/index.ts"
-  ]
+   "jsLikeImports": [
+      "src/core/processors/js-like.ts",
+      "src/core/processors/style-like.ts",
+      "fs",
+      "path",
+      "glob",
+      "src/core/common/index.ts",
+      "yocto-spinner",
+      "util",
+      "src/core/cli/index.ts",
+      "@swc/core",
+      "src/core/visitor/index.ts"
+   ],
+   "styleLikeImports": [],
+   "unusedFile": [
+      "src/index.ts"
+   ]
 }
 ```
 
