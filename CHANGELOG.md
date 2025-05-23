@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.3
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.2...v0.1.3)
+
+### 🚀 Enhancements
+
+- Cli process add ([ca1134f](https://github.com/laoer536/minip/commit/ca1134f))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.2
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.1...v0.1.2)
