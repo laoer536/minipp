@@ -9,7 +9,7 @@ let styleLikeFiles: string[] = []
 
 export async function styleLike(projectRoot: string) {
   projectRootForUse = projectRoot
-  styleLikeFiles = await glob('src/**/*.{css,scss,less}')
+  styleLikeFiles = await glob('src/**/*.{css,scss,less}', { nodir: true })
   const importPaths = new Set<string>()
   for (const styleLikeFile of styleLikeFiles) {
     try {

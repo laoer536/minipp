@@ -1,9 +1,17 @@
-import { type ImportDeclaration, parse, type TsType, type JSXAttribute } from '@swc/core'
+import {
+  type ImportDeclaration,
+  parse,
+  type TsType,
+  type JSXAttribute,
+  type CallExpression,
+  type Expression,
+} from '@swc/core'
 import ASTVisitor from '../visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
 import { supportFileTypesWithDot } from '../common'
+import { styleText } from 'util'
 
 class ImportAnalyzerVisitor extends ASTVisitor {
   override visitJSXAttribute(node: JSXAttribute) {
@@ -23,7 +31,7 @@ class ImportAnalyzerVisitor extends ASTVisitor {
     if (hasFileExtension(mediaPath)) {
       importPaths.add(pathToRealPath(currentFilePath, mediaPath))
     }
-    return node
+    return super.visitJSXAttribute(node)
   }
   override visitTsType(node: TsType) {
     return node
@@ -31,7 +39,17 @@ class ImportAnalyzerVisitor extends ASTVisitor {
   override visitImportDeclaration(node: ImportDeclaration) {
     const modulePath = node.source.value
     importPaths.add(pathToRealPath(currentFilePath, modulePath))
-    return node
+    return super.visitImportDeclaration(node)
+  }
+  override visitCallExpression(node: CallExpression): Expression {
+    const { callee, arguments: callExpressionArguments } = node
+    if (callee.type === 'Import') {
+      if (callExpressionArguments[0]?.expression.type === 'StringLiteral') {
+        const expression = callExpressionArguments[0].expression
+        importPaths.add(pathToRealPath(currentFilePath, expression.value))
+      }
+    }
+    return super.visitCallExpression(node)
   }
 }
 
@@ -57,13 +75,13 @@ async function visitCode(code: string) {
 
 export async function jsLike(projectRoot: string) {
   projectRootForUse = projectRoot
-  jsLikeFiles = await glob('src/**/*.{ts,tsx}')
+  jsLikeFiles = await glob('src/**/*.{ts,tsx}', { nodir: true })
   for (const jsLikeFile of jsLikeFiles) {
     try {
       currentFilePath = jsLikeFile
       await visitCode(fs.readFileSync(path.join(projectRoot, jsLikeFile), 'utf8'))
     } catch (e) {
-      console.error('Failed to visit', jsLikeFile, `error: ${e}`)
+      console.error(styleText('red', `Failed to visit:${jsLikeFile},${JSON.stringify(e, null, 2)}`))
     }
   }
   return importPaths
