@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.5
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.4...v0.1.5)
+
+### 🚀 Enhancements
+
+- Only scan files, support asynchronous import "import ('./file')" ([60815f3](https://github.com/laoer536/minip/commit/60815f3))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.4
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.3...v0.1.4)
