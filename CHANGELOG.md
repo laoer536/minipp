@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.1.6
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.5...v0.1.6)
+
+### 🚀 Enhancements
+
+- Support project dependency analysis ([24b6697](https://github.com/laoer536/minip/commit/24b6697))
+
+### 📖 Documentation
+
+- Update md ([e35c5b6](https://github.com/laoer536/minip/commit/e35c5b6))
+- Update md ([63ce080](https://github.com/laoer536/minip/commit/63ce080))
+- Update md ([972aee7](https://github.com/laoer536/minip/commit/972aee7))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.5
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.4...v0.1.5)
