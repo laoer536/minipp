@@ -17,9 +17,9 @@ async function main() {
   const projectFiles = await glob(`src/**/*.{${supportFileTypes.toString()}}`)
   spinner.text = 'Start extracting code file import information...'
   const jsLikeImports = await jsLike(projectRoot)
-  spinner.text = '开始提取样式代码文件导入信息...'
+  spinner.text = 'Start extracting the style code file import information...'
   const styleLikeImports = await styleLike(projectRoot)
-  spinner.text = '开始导出json报告...'
+  spinner.text = 'Start exporting JSON reports...'
   const jsonReport = {
     jsLikeImports: [...jsLikeImports],
     styleLikeImports: [...styleLikeImports],

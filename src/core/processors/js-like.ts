@@ -29,7 +29,6 @@ class ImportAnalyzerVisitor extends ASTVisitor {
     return node
   }
   override visitImportDeclaration(node: ImportDeclaration) {
-    // 提取导入信息
     const modulePath = node.source.value
     importPaths.add(pathToRealPath(currentFilePath, modulePath))
     return node
