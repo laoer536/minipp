@@ -7,42 +7,29 @@
 ## 功能特点
 
 ### 支持的文件类型
-- TypeScript/JavaScript: `.ts`, `.tsx`, `.js`, `.jsx`
+- TypeScript/JavaScript: `.ts`, `.tsx`
 - 样式文件: `.css`, `.less`, `.scss`
-- HTML: `.html`
-- 媒体文件: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.ico`, `.webp`
+- 媒体文件等: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`，`.eot`, `.json`
 
 ### 支持的依赖关系
 1. **JavaScript/TypeScript 文件**:
    - ES Module 的 `import` 语句
    - 静态导入路径
    - 相对路径导入
-   - TypeScript 路径别名（如 `@/*`）
+   - TypeScript 路径别名（如 `@/*`）// 默认支持
+   - 支持 `import()` 动态导入
 
-2. **HTML 文件**:
-   - `<script src="...">` 标签
-   - `<link href="...">` 标签
-   - `<img src="...">` 标签
-   - 相对路径引用
-   - 路径别名引用
 
-3. **样式文件**:
+2. **样式文件**:
    - `@import` 语句
    - `url()` 函数中的资源引用
    - 相对路径引用
    - 路径别名引用
 
-### 配置选项
-- 可配置忽略的目录
-- 可自定义支持的文件类型
-- 可指定项目根目录
-- 可指定 TypeScript 配置文件路径
-
 ## 使用限制
 
 ### 不支持的导入方式
 1. **动态导入**:
-   - 不支持 `import()` 动态导入
    - 不支持模板字符串形式的路径
    - 不支持条件导入
 
@@ -53,15 +40,10 @@
 
 3. **路径解析**:
    - 不支持运行时动态拼接的路径
-   - 不支持 webpack 的路径别名（alias）
+   - 不支持 自定义的路径别名（alias）（目前自动支持以“@/”开头的路径，会以src目录解析）
    - 不支持复杂的路径映射规则（如多重通配符）
 
 4. **特殊语法**:
-   - 不支持 CSS Modules 的 `:global` 和 `:local` 语法
-      - 无法正确解析 `:global(.className)` 和 `:local(.className)` 中的类名引用
-      - 不会影响 `url()` 函数中的资源引用（如图片、字体等）
-      - 可能导致样式类名依赖关系不完整
-      - 建议使用普通的 CSS 类名或考虑使用 CSS-in-JS 方案
    - 不支持 CSS-in-JS 的样式引用
    - 不支持 Vue 单文件组件的依赖解析
 
@@ -71,8 +53,7 @@
    - 内存使用量随项目规模增长
 
 2. **准确性**:
-   - 可能存在误报或漏报的情况
-   - 不支持复杂的构建时配置
+   - 对于工程化项目运行时自动解析加载的文件（没有明确指定被导入使用），解析器不能确定该文件是否被使用（目前统一归类在未被使用的文件中），需要使用者根据自己的框架确定是否需要删除。
 
 ## 下载
 ```bash
@@ -144,34 +125,42 @@ import { types } from 'types';
 
 ## 输出文件
 
-### HTML 报告
-- 交互式可视化界面
-- 支持节点拖拽和缩放
-- 显示文件依赖关系
-- 悬停显示详细信息
-- 显示原始路径和解析后的路径
 
 ### JSON 报告
-- 完整的依赖关系数据
-- 包含正向和反向依赖
-- 文件类型信息
-- 相对路径引用
-- 路径别名解析结果
+- 代码问价中涉及的导入信息
+- css,less,scss文件中涉及的导入信息
+- 未被使用的文件信息
+
+示例：
+
+```json
+{
+  "jsLikeImports": [
+    "src/core/processors/js-like.ts",
+    "src/core/processors/style-like.ts",
+    "fs",
+    "path",
+    "glob",
+    "src/core/common/index.ts",
+    "yocto-spinner",
+    "util",
+    "src/core/cli/index.ts",
+    "@swc/core",
+    "src/core/visitor/index.ts"
+  ],
+  "styleLikeImports": [],
+  "unusedFile": [
+    "src/index.ts"
+  ]
+}
+```
 
 ## 注意事项
 
 1. 建议在项目根目录运行
-2. 确保有足够的磁盘空间存储报告文件
-3. 对于大型项目，建议先使用 `--ignore` 排除不必要的目录
-4. 如果遇到内存问题，可以分批处理不同的目录
-5. 确保 `tsconfig.json` 中的路径映射配置正确
 
 ## 未来计划
 
-1. 支持 CommonJS 模块系统
-2. 支持动态导入解析
-3. 支持 webpack 路径别名
-4. 支持更复杂的路径映射规则
-5. 支持 CSS Modules
-6. 支持 Vue 单文件组件
-7. 优化大项目处理性能 
+1. 支持 js，jsx解析
+2. 支持同时分析出项目没有用到的外部依赖
+3. 支持 Vue 单文件组件

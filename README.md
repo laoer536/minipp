@@ -1,69 +1,50 @@
 # minipp
 
-Quickly help you find files that are not being used in your project, and slim down your project.
+Quickly help you find unused files in your project to slim down your codebase.
 
-⚠️ At present, only front-end react+ts engineering projects are supported, considering that only for source code files and ignoring project configuration files, files and folders outside the src directory will not be scanned.
+⚠️ Currently only supports scanning frontend React+TS engineering projects. Considering that it only targets source code files and ignores project configuration files, it will not scan files and folders outside the src directory.
 
 ## Features
 
 ### Supported File Types
-- TypeScript/JavaScript: `.ts`, `.tsx`, `.js`, `.jsx`
-- Style Files: `.css`, `.less`, `.scss`
-- HTML: `.html`
-- Media Files: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.ico`, `.webp`
+- TypeScript/JavaScript: `.ts`, `.tsx`
+- Style files: `.css`, `.less`, `.scss`
+- Media files: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`, `.eot`, `.json`
 
 ### Supported Dependencies
 1. **JavaScript/TypeScript Files**:
    - ES Module `import` statements
    - Static import paths
    - Relative path imports
-   - TypeScript path aliases (e.g., `@/*`)
+   - TypeScript path aliases (e.g., `@/*`) // Supported by default
+   - Support for `import()` dynamic imports
 
-2. **HTML Files**:
-   - `<script src="...">` tags
-   - `<link href="...">` tags
-   - `<img src="...">` tags
-   - Relative path references
-   - Path alias references
-
-3. **Style Files**:
+2. **Style Files**:
    - `@import` statements
    - Resource references in `url()` functions
    - Relative path references
    - Path alias references
 
-### Configuration Options
-- Configurable ignored directories
-- Customizable supported file types
-- Specifiable project root directory
-- Specifiable TypeScript configuration file path
-
 ## Limitations
 
 ### Unsupported Import Methods
 1. **Dynamic Imports**:
-   - No support for `import()` dynamic imports
-   - No support for template string paths
-   - No support for conditional imports
+   - Template string paths not supported
+   - Conditional imports not supported
 
 2. **CommonJS Modules**:
-   - No support for `require()` syntax
-   - No support for webpack-specific features like `require.context()`
-   - No support for `module.exports` and `exports`
+   - `require()` syntax not supported
+   - Webpack-specific syntax like `require.context()` not supported
+   - `module.exports` and `exports` not supported
 
 3. **Path Resolution**:
-   - No support for runtime dynamic path concatenation
-   - No support for webpack path aliases
-   - No support for complex path mapping rules (e.g., multiple wildcards)
+   - Runtime dynamically concatenated paths not supported
+   - Custom path aliases not supported (currently automatically supports paths starting with "@/" which resolves to src directory)
+   - Complex path mapping rules (like multiple wildcards) not supported
 
 4. **Special Syntax**:
-   - No support for CSS Modules `:global` and `:local` syntax
-      - Cannot correctly parse class names in `:global(.className)` and `:local(.className)`
-      - Does not affect resource references in `url()` functions (images, fonts, etc.)
-      - May result in incomplete style class name dependencies
-      - Consider using regular CSS class names or CSS-in-JS solutions
-   - No support for CSS-in-JS style references
-   - No support for Vue single-file component dependency resolution
+   - CSS-in-JS style references not supported
+   - Vue single-file component dependency resolution not supported
 
 ### Other Limitations
 1. **Performance Considerations**:
@@ -71,17 +52,16 @@ Quickly help you find files that are not being used in your project, and slim do
    - Memory usage increases with project size
 
 2. **Accuracy**:
-   - May have false positives or false negatives
-   - No support for complex build-time configurations
+   - For files that are automatically loaded at runtime in engineering projects (without explicit import usage), the parser cannot determine if the file is being used (currently categorized as unused files). Users need to determine whether to delete these files based on their framework.
 
-## Download
+## Installation
 ```bash
 npm install minipp -g
 ```
 
 ## Usage
 
-### Basic Usage (Execution at the root directory)
+### Basic Usage (execute in project root directory)
 ```bash
 minipp
 ```
@@ -91,18 +71,17 @@ minipp
 minipp /path/to/your/project
 ```
 
-### Configure Ignored Directories (TODO)
+### Configure Ignored Directories (coming soon)
 ```bash
 minipp --ignore node_modules,dist,coverage
 ```
 
-### Configure Supported File Types (TODO)
+### Configure Supported File Types (coming soon)
 ```bash
 minipp --extensions ts,tsx,js,jsx,css
 ```
 
-
-### Combined Usage (TODO)
+### Combined Usage
 ```bash
 minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx
 ```
@@ -113,23 +92,23 @@ minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,j
 1. **Path Aliases**:
 ```json
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"] // Supported by default
-    }
-  }
+   "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+         "@/*": ["./src/*"] // Supported by default
+      }
+   }
 }
 ```
 
 2. **Usage Examples**:
 ```typescript
-// Relative path import
+// Relative path imports
 import { Button } from './components/Button';
 import { Button } from '../../components/Button';
 import { Button } from '../components/Button';
 
-// Path alias import
+// Path alias imports
 import { utils } from '@/utils'; // will be recognized as "src/utils"
 import { config } from '@config/settings'; //will be identified as an external dependency rather than an on-premises resource
 
@@ -139,39 +118,46 @@ import { types } from 'types';
 
 ### Path Resolution Rules
 1. `@/utils` -> `src/utils`
-2. `./utils` -> Files that are recognized as relative to the current file directory
-3. `../utils` -> Recognized as a file one level above the current file directory `'../../utils', '..'`still supported
+2. `./utils` -> recognized as a file relative to the current file directory
+3. `../utils` -> recognized as a file one level up from the current file directory. `'../../utils', '..'` are also supported
 
 ## Output Files
 
-### HTML Report
-- Interactive visualization interface
-- Support for node dragging and zooming
-- Display of file dependencies
-- Hover to show detailed information
-- Display of original and resolved paths
-
 ### JSON Report
-- Complete dependency relationship data
-- Includes forward and reverse dependencies
-- File type information
-- Relative path references
-- Path alias resolution results
+- Import information from code files
+- Import information from css, less, scss files
+- Information about unused files
+
+Example:
+
+```json
+{
+  "jsLikeImports": [
+    "src/core/processors/js-like.ts",
+    "src/core/processors/style-like.ts",
+    "fs",
+    "path",
+    "glob",
+    "src/core/common/index.ts",
+    "yocto-spinner",
+    "util",
+    "src/core/cli/index.ts",
+    "@swc/core",
+    "src/core/visitor/index.ts"
+  ],
+  "styleLikeImports": [],
+  "unusedFile": [
+    "src/index.ts"
+  ]
+}
+```
 
 ## Notes
 
-1. Recommended to run in project root directory
-2. Ensure sufficient disk space for report files
-3. For large projects, consider using `--ignore` to exclude unnecessary directories
-4. If encountering memory issues, process directories in batches
-5. Ensure correct path mapping configuration in `tsconfig.json`
+1. It is recommended to run in the project root directory
 
 ## Future Plans
 
-1. Support for CommonJS module system
-2. Support for dynamic import resolution
-3. Support for webpack path aliases
-4. Support for more complex path mapping rules
-5. Support for CSS Modules
-6. Support for Vue single-file components
-7. Optimize performance for large projects 
+1. Support for js, jsx parsing
+2. Support for analyzing unused external dependencies
+3. Support for Vue single-file components 
