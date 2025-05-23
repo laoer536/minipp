@@ -147,8 +147,8 @@ import { types } from 'types';
 
 
 ### JSON 报告
-- 代码问价中涉及的导入信息
-- css,less,scss文件中涉及的导入信息
+- 代码文件中涉及的导入信息
+- css,less,scss样式文件中涉及的导入信息
 - 未被使用的文件信息
 
 示例：
