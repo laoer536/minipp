@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.7
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.6...v0.1.7)
+
+### 🚀 Enhancements
+
+- Support configuration files ([9064ac9](https://github.com/laoer536/minip/commit/9064ac9))
+
+### 📖 Documentation
+
+- Update md ([69e8428](https://github.com/laoer536/minip/commit/69e8428))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.6
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.5...v0.1.6)
