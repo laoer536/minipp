@@ -5,14 +5,24 @@ import path from 'path'
 import { glob } from 'glob'
 import yoctoSpinner from 'yocto-spinner'
 import { styleText } from 'util'
-import { getProjectDependencies, loadUserConfig, parseArgs, supportFileTypes } from '../common'
+import {
+  BACK_UP_FOLDER,
+  delUnusedDependencies,
+  delUnusedFiles,
+  getProjectDependencies,
+  loadUserConfig,
+  parseArgs,
+  supportFileTypes,
+} from '../common'
 import { jsLike } from '../processors/js-like.ts'
 import { styleLike } from '../processors/style-like.ts'
+import { createInterface } from 'readline/promises'
+import { stdin as input, stdout as output } from 'process'
 
 async function main() {
   const { projectRoot } = parseArgs()
   console.log('Running minipp from project', projectRoot)
-  const { ignoreFiles, ignoreDependencies } = await loadUserConfig(path.join(projectRoot, 'minipp.config.ts'))
+  const { ignoreFiles, ignoreDependencies, needDel } = await loadUserConfig(path.join(projectRoot, 'minipp.config.ts'))
   let ignoreFilesSet: Set<string> | undefined
   let ignoreDependenciesSet: Set<string> | undefined
   if (ignoreFiles && ignoreFiles.length > 0) {
@@ -83,6 +93,34 @@ async function main() {
       `The export report is complete, and the execution is complete! The report path is located at: ${styleText('yellow', minippJsonPath)}`,
     ),
   )
+
+  // 执行删除文件操作
+  if (needDel) {
+    delUnusedFiles(jsonReport.unusedFile, projectRoot)
+    await delUnusedDependencies(jsonReport.codeUnusedDependencies, projectRoot)
+  } else {
+    const rl = createInterface({ input, output })
+    const answer = await rl.question(
+      'If you continue to delete unused files, the deleted files will be backed up？(y/n): ',
+    )
+    if (answer.trim().toLowerCase() === 'y') {
+      console.log('Deletion is in progress...')
+      delUnusedFiles(jsonReport.unusedFile, projectRoot)
+      await delUnusedDependencies(jsonReport.codeUnusedDependencies, projectRoot)
+      console.log(
+        styleText(
+          'green',
+          `The files are deleted successfully. The deleted files have been backed up: ${styleText('yellow', path.join(projectRoot, BACK_UP_FOLDER))}`,
+        ),
+      )
+    } else {
+      console.log('Canceled.')
+    }
+    rl.close()
+  }
 }
 
-main().catch(console.error)
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})

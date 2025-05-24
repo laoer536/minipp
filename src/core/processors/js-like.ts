@@ -6,14 +6,14 @@ import {
   type CallExpression,
   type Expression,
 } from '@swc/core'
-import ASTVisitor from '../visitor'
+import Visitor from '../visitor'
 import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
-import { supportFileTypesWithDot } from '../common'
 import { styleText } from 'util'
+import { hasFileExtension } from '../common'
 
-class ImportAnalyzerVisitor extends ASTVisitor {
+class ASTVisitor extends Visitor {
   override visitJSXAttribute(node: JSXAttribute) {
     const { value: nodeValue } = node
     let mediaPath: string = ''
@@ -61,7 +61,7 @@ const importDependencies = new Set<string>()
 let currentFilePath = ''
 let projectRootForUse = ''
 let jsLikeFiles: string[] = []
-const importAnalyzerVisitor = new ImportAnalyzerVisitor()
+const astVisitor = new ASTVisitor()
 
 /**
  * @description Currently, only TSX+ESModule+ is planned to be supported, and dynamic imports are not handled
@@ -74,7 +74,7 @@ async function visitCode(code: string) {
     comments: false,
     target: 'esnext',
   })
-  importAnalyzerVisitor.visitModule(ast)
+  astVisitor.visitModule(ast)
 }
 
 export async function jsLike(projectRoot: string) {
@@ -139,9 +139,4 @@ function tryToFindFilesWithoutASuffix(relativePathForProject: string) {
     return `${relativePathForProject}/index.d.ts`
   }
   return `${relativePathForProject}(Unknown file type, the file does not exist in the scan directory, or is not a TSX, TS or .d.ts file)`
-}
-
-function hasFileExtension(filePath: string) {
-  const ext = path.extname(filePath)
-  return supportFileTypesWithDot.includes(ext)
 }

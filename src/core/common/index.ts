@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import url from 'url'
 import { transform } from '@swc/core'
+import { styleText } from 'util'
 
 interface ProjectDependencies {
   dependencies?: Record<string, string>
@@ -21,6 +22,8 @@ export const defaulMinippConfig: MinippConfig = {
   ignoreFiles: [],
   ignoreDependencies: [],
 }
+
+export const BACK_UP_FOLDER = 'minipp-delete-files'
 
 export const supportFileTypes = [
   'ts',
@@ -145,4 +148,49 @@ export async function loadUserConfig(configPath: string): Promise<MinippConfig> 
 
 export function defineMinippConfig(minippConfig: MinippConfig) {
   return { ...defaulMinippConfig, ...minippConfig }
+}
+
+export function hasFileExtension(filePath: string) {
+  const ext = path.extname(filePath)
+  return supportFileTypesWithDot.includes(ext)
+}
+
+export function delUnusedFiles(files: string[], projectRoot: string) {
+  for (const file of files) {
+    if (hasFileExtension(file)) {
+      const filePath = path.join(projectRoot, file)
+      const backUpPath = path.join(projectRoot, BACK_UP_FOLDER, file)
+      fs.mkdirSync(path.dirname(backUpPath), { recursive: true })
+      fs.copyFileSync(filePath, backUpPath)
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.log(`Delete the file ${styleText('blue', file)} fail.`)
+        }
+      })
+    }
+  }
+}
+
+export async function delUnusedDependencies(unusedDependencies: string[], projectRoot: string) {
+  const packageJsonPath = path.join(projectRoot, 'package.json')
+  const { default: packageJsonObj } = (await import(packageJsonPath, { assert: { type: 'json' } })) as {
+    default: ProjectDependencies
+  }
+  const afterPackageJson = JSON.parse(JSON.stringify(packageJsonObj)) as ProjectDependencies
+  const devDependencies = packageJsonObj['devDependencies'] || {}
+  const dependencies = packageJsonObj['dependencies'] || {}
+  for (const packageName in dependencies) {
+    if (unusedDependencies.includes(packageName)) {
+      delete afterPackageJson?.dependencies?.[packageName]
+    }
+  }
+  for (const packageName in devDependencies) {
+    if (unusedDependencies.includes(packageName)) {
+      delete afterPackageJson?.devDependencies?.[packageName]
+    }
+  }
+  const backUpDir = path.join(projectRoot, BACK_UP_FOLDER)
+  fs.mkdirSync(backUpDir, { recursive: true })
+  fs.writeFileSync(path.join(projectRoot, BACK_UP_FOLDER, 'package.json'), JSON.stringify(packageJsonObj, null, 2))
+  fs.writeFileSync(packageJsonPath, JSON.stringify(afterPackageJson, null, 2))
 }

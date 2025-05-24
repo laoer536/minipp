@@ -38,8 +38,12 @@ export default defineMinippConfig({
   ignoreFiles: ['src/index.ts', 'src/core/cli/index.ts'],
   ignoreDependencies: ['@types/node'],
 })
-
 ```
+
+### Support for deleting unused files and package.json dependencies (deleted files will be backed up)
+
+![2025-05-25 01.51.52.png](https://s2.loli.net/2025/05/25/wcufp4lN5mXM9vb.png)
+
 ## Advantages
 
 1. **High Performance**:

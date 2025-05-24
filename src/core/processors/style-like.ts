@@ -1,7 +1,7 @@
 import { glob } from 'glob'
 import fs from 'fs'
 import path from 'path'
-import { supportFileTypesWithDot } from '../common'
+import { hasFileExtension } from '../common'
 
 let currentFilePath = ''
 let projectRootForUse = ''
@@ -61,9 +61,4 @@ function pathToRealPath(currentFilePath: string, importPath: string) {
   }
   const absolutePath = path.resolve(path.dirname(currentFilePath), importPath)
   return path.relative(projectRootForUse, absolutePath)
-}
-
-const hasFileExtension = (filePath: string): boolean => {
-  const ext = path.extname(filePath)
-  return supportFileTypesWithDot.includes(ext)
 }
