@@ -90,8 +90,18 @@ export default defineMinippConfig({
    - 对于工程化项目运行时自动解析加载的文件（没有明确指定被导入使用），解析器不能确定该文件是否被使用（目前统一归类在未被使用的文件中），需要使用者根据自己的框架确定是否需要删除。
 
 ## 下载
+
+### npm
 ```bash
-npm install minipp -g
+npm install minipp -D
+```
+### yarn
+```bash
+yarn add minipp -D
+```
+### pnpm
+```bash
+pnpm add minipp -D
 ```
 
 ## 使用方法

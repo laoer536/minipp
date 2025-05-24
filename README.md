@@ -92,8 +92,18 @@ export default defineMinippConfig({
    - For files that are automatically loaded at runtime in engineering projects (without explicit import usage), the parser cannot determine if the file is being used (currently categorized as unused files). Users need to determine whether to delete these files based on their framework.
 
 ## Installation
+
+### npm
 ```bash
-npm install minipp -g
+npm install minipp -D
+```
+### yarn
+```bash
+yarn add minipp -D
+```
+### pnpm
+```bash
+pnpm add minipp -D
 ```
 
 ## Usage
