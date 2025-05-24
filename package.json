@@ -9,7 +9,7 @@
   },
   "types": "./dist/index.d.mts",
   "bin": {
-    "minipp": "./dist/core/cli.mjs"
+    "minipp": "./dist/core/cli/index.mjs"
   },
   "files": [
     "dist"
