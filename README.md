@@ -4,7 +4,7 @@ Quickly help you find unused files in your project to slim down your codebase.
 
 > [!WARNING]
 >
-> ⚠️  At present, it only supports scanning TS projects or front-end react+ts engineering projects, considering that it only targets the source code files and ignores the project configuration files, so it will not scan files and folders outside the src directory.
+> ⚠️  At present, it only supports scanning TS projects or front-end react+ts engineering projects, considering that it only targets the source code files and ignores the project configuration files, so it will not scan files and folders outside the src directory. Need node version >=20.
 
 ## Features
 
