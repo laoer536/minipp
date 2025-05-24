@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.9
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.8...v0.1.9)
+
+### 🚀 Enhancements
+
+- Support deleting unused files and unused dependencies ([96beaeb](https://github.com/laoer536/minip/commit/96beaeb))
+
+### 📖 Documentation
+
+- Node version need >= 20 ([7c313ef](https://github.com/laoer536/minip/commit/7c313ef))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.8
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.7...v0.1.8)
