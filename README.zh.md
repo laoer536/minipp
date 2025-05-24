@@ -28,6 +28,20 @@
    - 相对路径引用
    - 路径别名引用
 
+
+### 支持配置文件
+
+在项目根目录下新建`minipp.config.ts`
+```ts
+import { defineMinippConfig } from 'minipp'
+
+export default defineMinippConfig({
+  ignoreFiles: ['src/index.ts', 'src/core/cli/index.ts'],
+  ignoreDependencies: ['@types/node'],
+})
+
+```
+
 ## 优势
 
 1. **高性能**：

@@ -27,6 +27,19 @@ Quickly help you find unused files in your project to slim down your codebase.
    - Relative path references
    - Path alias references
 
+
+### Support profiles
+
+Create a new item in the root directory of the project: `minipp.config.ts`
+```ts
+import { defineMinippConfig } from 'minipp'
+
+export default defineMinippConfig({
+  ignoreFiles: ['src/index.ts', 'src/core/cli/index.ts'],
+  ignoreDependencies: ['@types/node'],
+})
+
+```
 ## Advantages
 
 1. **High Performance**:
@@ -93,21 +106,6 @@ minipp
 ### Specify Project Path
 ```bash
 minipp /path/to/your/project
-```
-
-### Configure Ignored Directories (coming soon)
-```bash
-minipp --ignore node_modules,dist,coverage
-```
-
-### Configure Supported File Types (coming soon)
-```bash
-minipp --extensions ts,tsx,js,jsx,css
-```
-
-### Combined Usage
-```bash
-minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx
 ```
 
 ## TypeScript Path Mapping Support

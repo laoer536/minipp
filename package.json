@@ -2,15 +2,21 @@
   "name": "minipp",
   "version": "0.1.6",
   "description": "Quickly help you find files that are not being used in your project, and slim down your project.",
+  "type": "module",
+  "exports": {
+    "types": "./dist/index.d.mts",
+    "default": "./dist/index.mjs"
+  },
+  "types": "./dist/index.d.mts",
   "bin": {
-    "minipp": "./dist/index.mjs"
+    "minipp": "./dist/core/cli.mjs"
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "unbuild --minify",
-    "dev": "tsx src/index.ts",
+    "dev": "tsx src/core/cli/index.ts",
     "start": "node ./dist/index.mjs",
     "clean": "rimraf dist",
     "lint": "eslint . --ext .ts",
