@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.8
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.7...v0.1.8)
+
+### 🩹 Fixes
+
+- Cli run comand not find ([9f9b51a](https://github.com/laoer536/minip/commit/9f9b51a))
+
+### 📖 Documentation
+
+- Update readme ([c0cc780](https://github.com/laoer536/minip/commit/c0cc780))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.7
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.6...v0.1.7)
