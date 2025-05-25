@@ -9,7 +9,7 @@ Quickly help you find unused files in your project to slim down your codebase.
 ## Features
 
 ### Supported File Types
-- TypeScript/JavaScript: `.ts`, `.tsx`
+- TypeScript: `.ts`, `.tsx`
 - Style files: `.css`, `.less`, `.scss`
 - Media files: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`, `.eot`, `.json`
 

@@ -9,7 +9,7 @@
 ## 功能特点
 
 ### 支持的文件类型
-- TypeScript/JavaScript: `.ts`, `.tsx`
+- TypeScript: `.ts`, `.tsx`
 - 样式文件: `.css`, `.less`, `.scss`
 - 媒体文件等: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`，`.eot`, `.json`
 
