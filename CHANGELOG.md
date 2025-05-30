@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.1.13
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.12...v0.1.13)
+
+### 📖 Documentation
+
+- Update use for README ([f45dfc1](https://github.com/laoer536/minip/commit/f45dfc1))
+- Update use for README ([46dad00](https://github.com/laoer536/minip/commit/46dad00))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.12
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.11...v0.1.12)
