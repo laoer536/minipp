@@ -118,6 +118,34 @@ yarn add minipp -D
 pnpm add minipp -D
 ```
 
+### 在项目根目录创建minipp.config.ts
+
+```ts
+import { defineMinippConfig } from 'minipp'
+
+export default defineMinippConfig({
+  ignoreFiles: ['src/index.ts', 'src/core/cli/index.ts'],
+  ignoreDependencies: ['@types/node'],
+})
+```
+
+也支持匹配规则写法
+
+```ts
+export default defineMinippConfig({
+   needDel: false,
+   ignoreFiles: ['src/index.ts', 'src/core/**'],
+   ignoreDependencies: ['@types*'],
+})
+```
+
+当然你也可以全局使用
+
+```shell
+npm install minipp -g
+```
+但是别忘记了创建`minipp.config.ts`在目标项目的根目录
+
 ## 使用方法
 
 ### 基本用法（在项目根目录下执行）
@@ -130,20 +158,6 @@ minipp
 minipp /path/to/your/project
 ```
 
-### 配置忽略目录 (后续支持)
-```bash
-minipp --ignore node_modules,dist,coverage
-```
-
-### 配置支持的文件类型 (后续支持)
-```bash
-minipp --extensions ts,tsx,js,jsx,css
-```
-
-### 组合使用
-```bash
-minipp /path/to/your/project --ignore node_modules,dist --extensions ts,tsx,js,jsx
-```
 
 ## TypeScript 路径映射支持
 

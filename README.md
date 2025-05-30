@@ -119,6 +119,34 @@ yarn add minipp -D
 pnpm add minipp -D
 ```
 
+
+### Create a `minipp.config.ts` at the root of the project
+
+```ts
+import { defineMinippConfig } from 'minipp'
+
+export default defineMinippConfig({
+  ignoreFiles: ['src/index.ts', 'src/core/cli/index.ts'],
+  ignoreDependencies: ['@types/node'],
+})
+```
+
+Matching rules are also supported.
+```ts
+export default defineMinippConfig({
+   needDel: false,
+   ignoreFiles: ['src/index.ts', 'src/core/**'],
+   ignoreDependencies: ['@types*'],
+})
+```
+
+Of course, you can also use it globally.
+
+```shell
+npm install minipp -g
+```
+But don't forget to create `minipp.config.ts` in the root directory of the target project.
+
 ## Usage
 
 ### Basic Usage (execute in project root directory)
