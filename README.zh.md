@@ -42,6 +42,16 @@ export default defineMinippConfig({
 
 ```
 
+也支持匹配规则写法
+```ts
+// 可参考 https://github.com/isaacs/minimatch
+export default defineMinippConfig({
+   needDel: false,
+   ignoreFiles: ['src/index.ts', 'src/core/**'],
+   ignoreDependencies: ['@types*'],
+})
+```
+
 ### 支持删除未使用的文件和package.json依赖 (删除的文件会被备份)
 
 ![2025-05-25 01.51.52.png](https://s2.loli.net/2025/05/25/wcufp4lN5mXM9vb.png)

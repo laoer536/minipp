@@ -3,6 +3,7 @@ import fs from 'fs'
 import url from 'url'
 import { transform } from '@swc/core'
 import { styleText } from 'util'
+import { minimatch } from 'minimatch'
 
 interface ProjectDependencies {
   dependencies?: Record<string, string>
@@ -193,4 +194,16 @@ export async function delUnusedDependencies(unusedDependencies: string[], projec
   fs.mkdirSync(backUpDir, { recursive: true })
   fs.writeFileSync(path.join(projectRoot, BACK_UP_FOLDER, 'package.json'), JSON.stringify(packageJsonObj, null, 2))
   fs.writeFileSync(packageJsonPath, JSON.stringify(afterPackageJson, null, 2))
+}
+
+export function multiPatternFilter(files: string[], patterns: string[]): string[] {
+  console.log(files, patterns)
+  const positive = patterns.filter((p) => !p.startsWith('!'))
+  const negative = patterns.filter((p) => p.startsWith('!')).map((p) => p.slice(1))
+  const includePatterns = positive.length > 0 ? positive : ['*']
+  return files.filter(
+    (file) =>
+      includePatterns.some((pattern) => minimatch(file, pattern)) &&
+      !negative.some((pattern) => minimatch(file, pattern)),
+  )
 }

@@ -11,6 +11,7 @@ import {
   delUnusedFiles,
   getProjectDependencies,
   loadUserConfig,
+  multiPatternFilter,
   parseArgs,
   supportFileTypes,
 } from '../common'
@@ -66,14 +67,20 @@ async function main() {
       .filter((projectFile) => !importPaths.has(projectFile))
       .filter((projectFile) => !styleLikeImports.has(projectFile))
     if (ignoreFilesSet) {
-      return baseFilter.filter((item) => !ignoreFilesSet.has(item))
+      return multiPatternFilter(
+        baseFilter,
+        [...ignoreFilesSet].map((ig) => `!${ig}`),
+      )
     }
     return baseFilter
   }
   const getUnusedDependenciesSet = () => {
     const baseFilter = [...dependencies].filter((dependency) => !importDependencies.has(dependency))
     if (ignoreDependenciesSet) {
-      return baseFilter.filter((item) => !ignoreDependenciesSet.has(item))
+      return multiPatternFilter(
+        baseFilter,
+        [...ignoreDependenciesSet].map((ig) => `!${ig}`),
+      )
     }
     return baseFilter
   }
