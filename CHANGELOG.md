@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.1.10
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.9...v0.1.10)
+
+### 🚀 Enhancements
+
+- Config file supports rule matching ([837700c](https://github.com/laoer536/minip/commit/837700c))
+
+### 📖 Documentation
+
+- Update readme ([34d6bf0](https://github.com/laoer536/minip/commit/34d6bf0))
+
+### 🎨 Styles
+
+- Delete log ([b8d4143](https://github.com/laoer536/minip/commit/b8d4143))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.9
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.8...v0.1.9)
