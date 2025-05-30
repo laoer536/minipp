@@ -44,7 +44,6 @@ export default defineMinippConfig({
 
 也支持匹配规则写法
 ```ts
-// 可参考 https://github.com/isaacs/minimatch
 export default defineMinippConfig({
    needDel: false,
    ignoreFiles: ['src/index.ts', 'src/core/**'],

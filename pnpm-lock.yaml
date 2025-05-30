@@ -33,9 +33,9 @@ importers:
       glob:
         specifier: ^11.0.2
         version: 11.0.2
-      minimatch:
-        specifier: ^10.0.1
-        version: 10.0.1
+      ignore:
+        specifier: ^7.0.4
+        version: 7.0.4
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -1281,6 +1281,10 @@ packages:
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
+    engines: {node: '>= 4'}
+
+  ignore@7.0.4:
+    resolution: {integrity: sha512-gJzzk+PQNznz8ysRrC0aOkBNVRBDtE1n53IqyqEf3PXrYwomFs5q4pGMizBMJF+ykh03insJ27hB8gSrD2Hn8A==}
     engines: {node: '>= 4'}
 
   import-fresh@3.3.1:
@@ -3343,6 +3347,8 @@ snapshots:
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
+
+  ignore@7.0.4: {}
 
   import-fresh@3.3.1:
     dependencies:

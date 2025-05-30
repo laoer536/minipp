@@ -3,7 +3,7 @@ import fs from 'fs'
 import url from 'url'
 import { transform } from '@swc/core'
 import { styleText } from 'util'
-import { minimatch } from 'minimatch'
+import ignore from 'ignore'
 
 interface ProjectDependencies {
   dependencies?: Record<string, string>
@@ -197,9 +197,6 @@ export async function delUnusedDependencies(unusedDependencies: string[], projec
 }
 
 export function multiPatternFilter(files: string[], patterns: string[]): string[] {
-  let res = files
-  for (const pattern of patterns) {
-    res = res.filter(minimatch.filter(pattern, { matchBase: true }))
-  }
-  return res
+  const ig = ignore().add(patterns)
+  return ig.filter(files)
 }

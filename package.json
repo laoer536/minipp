@@ -33,7 +33,7 @@
     "changelogen": "^0.6.1",
     "eslint": "^8.57.0",
     "glob": "^11.0.2",
-    "minimatch": "^10.0.1",
+    "ignore": "^7.0.4",
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",

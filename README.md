@@ -42,7 +42,6 @@ export default defineMinippConfig({
 
 Matching rules are also supported.
 ```ts
-// Reference: https://github.com/isaacs/minimatch
 export default defineMinippConfig({
    needDel: false,
    ignoreFiles: ['src/index.ts', 'src/core/**'],
