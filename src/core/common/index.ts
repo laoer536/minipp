@@ -197,7 +197,6 @@ export async function delUnusedDependencies(unusedDependencies: string[], projec
 }
 
 export function multiPatternFilter(files: string[], patterns: string[]): string[] {
-  console.log(files, patterns)
   const positive = patterns.filter((p) => !p.startsWith('!'))
   const negative = patterns.filter((p) => p.startsWith('!')).map((p) => p.slice(1))
   const includePatterns = positive.length > 0 ? positive : ['*']
