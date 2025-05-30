@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.11
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.10...v0.1.11)
+
+### 🩹 Fixes
+
+- Files rule matching ([07298d0](https://github.com/laoer536/minip/commit/07298d0))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.10
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.9...v0.1.10)
