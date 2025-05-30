@@ -24,6 +24,7 @@ async function main() {
   const { projectRoot } = parseArgs()
   console.log('Running minipp from project', projectRoot)
   const { ignoreFiles, ignoreDependencies, needDel } = await loadUserConfig(path.join(projectRoot, 'minipp.config.ts'))
+  console.log(`User config:`, { needDel, ignoreFiles, ignoreDependencies })
   let ignoreFilesSet: Set<string> | undefined
   let ignoreDependenciesSet: Set<string> | undefined
   if (ignoreFiles && ignoreFiles.length > 0) {
