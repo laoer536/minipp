@@ -1,10 +1,10 @@
 # minipp
 
-Quickly help you find unused files in your project to slim down your codebase.
+Quickly identify unused files in your project to help slim down your codebase.
 
 > [!WARNING]
 >
-> ⚠️  At present, it only supports scanning TS projects or front-end react+ts engineering projects, considering that it only targets the source code files and ignores the project configuration files, so it will not scan files and folders outside the src directory. Need node version >=20.
+> ⚠️  Currently, only TypeScript projects or frontend React+TS projects are supported. Since the tool focuses on source code files and ignores project configuration files, it will not scan files or folders outside the `src` directory. Requires Node.js version >= 20 to run.
 
 ## Features
 
@@ -13,13 +13,13 @@ Quickly help you find unused files in your project to slim down your codebase.
 - Style files: `.css`, `.less`, `.scss`
 - Media files: `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.mp3`, `.mp4`, `.wav`, `.woff`, `.woff2`, `.ttf`, `.eot`, `.json`
 
-### Supported Dependencies
+### Supported Dependency Relationships
 1. **TypeScript/TSX Files**:
    - ES Module `import` statements
    - Static import paths
    - Relative path imports
    - TypeScript path aliases (e.g., `@/*`) // Supported by default
-   - Support for `import()` dynamic imports
+   - Dynamic `import()` statements
 
 2. **Style Files**:
    - `@import` statements
@@ -27,10 +27,9 @@ Quickly help you find unused files in your project to slim down your codebase.
    - Relative path references
    - Path alias references
 
+### Configuration File Support
 
-### Support profiles
-
-Create a new item in the root directory of the project: `minipp.config.ts`
+Create a `minipp.config.ts` file in the project root:
 ```ts
 import { defineMinippConfig } from 'minipp'
 
@@ -40,7 +39,7 @@ export default defineMinippConfig({
 })
 ```
 
-Matching rules are also supported.
+Glob patterns are also supported:
 ```ts
 export default defineMinippConfig({
    needDel: false,
@@ -49,29 +48,29 @@ export default defineMinippConfig({
 })
 ```
 
-### Support for deleting unused files and package.json dependencies (deleted files will be backed up)
+### Supports Deleting Unused Files and Removing Unused Dependencies from `package.json` (Backups are saved in the `minipp-delete-files` folder)
 
 ![2025-05-25 01.51.52.png](https://s2.loli.net/2025/05/25/wcufp4lN5mXM9vb.png)
 
 ## Advantages
 
 1. **High Performance**:
-   - Extremely fast analysis speed even for large-scale projects
+   - Fast analysis even in large projects
    - Optimized file scanning algorithm
    - Efficient memory usage
 
 2. **Comprehensive Analysis**:
-   - Supports multiple file types (TypeScript, JavaScript, CSS, media files)
+   - Supports multiple file types (TypeScript, TSX, CSS, media files, etc.)
    - Handles various import methods and path aliases
    - Detailed JSON report output
 
-3. **Developer Friendly**:
+3. **Developer-Friendly**:
    - Simple command-line interface
    - Clear and detailed output format
-   - Easy to integrate into existing workflows
+   - Easy integration into existing workflows
 
 4. **Project Optimization**:
-   - Helps identify and remove unused files
+   - Identifies and removes unused files
    - Reduces project size
    - Improves codebase maintainability
 
@@ -79,30 +78,26 @@ export default defineMinippConfig({
 
 ### Unsupported Import Methods
 1. **Dynamic Imports**:
-   - Template string paths not supported
-   - Conditional imports not supported
+   - Template string paths are not supported
+   - Conditional imports are not supported
 
 2. **CommonJS Modules**:
-   - `require()` syntax not supported
-   - Webpack-specific syntax like `require.context()` not supported
-   - `module.exports` and `exports` not supported
+   - `require()` syntax is not supported
+   - Webpack-specific syntax like `require.context()` is not supported
+   - `module.exports` and `exports` are not supported
 
 3. **Path Resolution**:
-   - Runtime dynamically concatenated paths not supported
-   - Custom path aliases not supported (currently automatically supports paths starting with "@/" which resolves to src directory)
-   - Complex path mapping rules (like multiple wildcards) not supported
+   - Runtime dynamically constructed paths are not supported
+   - Custom path aliases (other than `@/`) are not supported (default `@/` is resolved to `src/`)
+   - Complex path mapping rules (e.g., multiple wildcards) are not supported
 
 4. **Special Syntax**:
-   - CSS-in-JS style references not supported
-   - Vue single-file component dependency resolution not supported
+   - CSS-in-JS style references are not supported
+   - Vue single-file component dependency resolution is not supported
 
 ### Other Limitations
-1. **Performance Considerations**:
-   - Large projects may require longer processing time
-   - Memory usage increases with project size
-
-2. **Accuracy**:
-   - For files that are automatically loaded at runtime in engineering projects (without explicit import usage), the parser cannot determine if the file is being used (currently categorized as unused files). Users need to determine whether to delete these files based on their framework.
+1. **Accuracy**:
+   - For files loaded automatically at runtime (without explicit imports in code), the tool cannot determine if they are used (currently classified as unused). Users must manually verify such files before deletion.
 
 ## Installation
 
@@ -119,8 +114,7 @@ yarn add minipp -D
 pnpm add minipp -D
 ```
 
-
-### Create a `minipp.config.ts` at the root of the project
+### Create `minipp.config.ts` in the Project Root
 
 ```ts
 import { defineMinippConfig } from 'minipp'
@@ -131,7 +125,8 @@ export default defineMinippConfig({
 })
 ```
 
-Matching rules are also supported.
+Glob patterns are also supported:
+
 ```ts
 export default defineMinippConfig({
    needDel: false,
@@ -140,16 +135,16 @@ export default defineMinippConfig({
 })
 ```
 
-Of course, you can also use it globally.
+You can also install it globally:
 
 ```shell
 npm install minipp -g
 ```
-But don't forget to create `minipp.config.ts` in the root directory of the target project.
+Don't forget to create `minipp.config.ts` in the target project's root directory.
 
 ## Usage
 
-### Basic Usage (execute in project root directory)
+### Basic Usage (Run in the project root)
 ```bash
 minipp
 ```
@@ -161,7 +156,7 @@ minipp /path/to/your/project
 
 ## TypeScript Path Mapping Support
 
-### Supported Configuration
+### Supported Configurations
 1. **Path Aliases**:
 ```json
 {
@@ -182,26 +177,26 @@ import { Button } from '../../components/Button';
 import { Button } from '../components/Button';
 
 // Path alias imports
-import { utils } from '@/utils'; // will be recognized as "src/utils"
-import { config } from '@config/settings'; //will be identified as an external dependency rather than an on-premises resource
+import { utils } from '@/utils'; // Resolved as "src/utils"
+import { config } from '@config/settings'; // Treated as an external dependency, not a local resource
 
-// Import from baseUrl
+// BaseUrl imports
 import { types } from 'types';
 ```
 
 ### Path Resolution Rules
 1. `@/utils` -> `src/utils`
-2. `./utils` -> recognized as a file relative to the current file directory
-3. `../utils` -> recognized as a file one level up from the current file directory. `'../../utils', '..'` are also supported
+2. `./utils` -> Resolved relative to the current file's directory
+3. `../utils` -> Resolved relative to the parent directory of the current file (supports `'../../utils', '..'`, etc.)
 
 ## Output Files
 
 ### JSON Report
-- Import information from code files
-- Import information from css, less, scss files
-- Information about unused files
-- Unused dependencies in your code
-- Dependencies that have been used in the code
+- Import information in code files
+- Import information in CSS/LESS/SCSS files
+- Unused file information
+- Unused dependencies in code
+- Used dependencies in code
 
 Example:
 
@@ -244,9 +239,9 @@ Example:
 
 ## Notes
 
-1. It is recommended to run in the project root directory
+1. It is recommended to run the tool in the project root directory.
 
 ## Future Plans
 
-1. Support for js, jsx parsing
-2. Support for Vue single-file components 
+1. Support for JavaScript and JSX parsing
+2. Support for Vue single-file components

@@ -51,7 +51,7 @@ export default defineMinippConfig({
 })
 ```
 
-### 支持删除未使用的文件和package.json依赖 (删除的文件会被备份)
+### 支持删除未使用的文件和移除package.json中未使用的依赖 (删除的文件和被修改的package.jso会被备份到项目的minipp-delete-files文件夹下)
 
 ![2025-05-25 01.51.52.png](https://s2.loli.net/2025/05/25/wcufp4lN5mXM9vb.png)
 
@@ -64,7 +64,7 @@ export default defineMinippConfig({
    - 高效的内存使用
 
 2. **全面的分析能力**：
-   - 支持多种文件类型（TypeScript、JavaScript、CSS、媒体文件等）
+   - 支持多种文件类型（TypeScript、TSX、CSS、媒体文件等）
    - 处理各种导入方法和路径别名
    - 详细的 JSON 报告输出
 
@@ -101,7 +101,7 @@ export default defineMinippConfig({
 
 ### 其他限制
 1. **准确性**:
-   - 对于工程化项目运行时自动解析加载的文件（没有明确指定被导入使用），解析器不能确定该文件是否被使用（目前统一归类在未被使用的文件中），需要使用者根据自己的框架确定是否需要删除。
+   - 对于工程化项目运行时自动解析加载的文件（代码文件中没有明确指定被导入使用），解析器不能确定该文件是否被使用（目前统一归类在未被使用的文件中），需要使用者根据自己的框架确定是否需要删除。
 
 ## 下载
 
