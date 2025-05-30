@@ -68,20 +68,14 @@ async function main() {
       .filter((projectFile) => !importPaths.has(projectFile))
       .filter((projectFile) => !styleLikeImports.has(projectFile))
     if (ignoreFilesSet) {
-      return multiPatternFilter(
-        baseFilter,
-        [...ignoreFilesSet].map((ig) => `!${ig}`),
-      )
+      return multiPatternFilter(baseFilter, [...ignoreFilesSet])
     }
     return baseFilter
   }
   const getUnusedDependenciesSet = () => {
     const baseFilter = [...dependencies].filter((dependency) => !importDependencies.has(dependency))
     if (ignoreDependenciesSet) {
-      return multiPatternFilter(
-        baseFilter,
-        [...ignoreDependenciesSet].map((ig) => `!${ig}`),
-      )
+      return multiPatternFilter(baseFilter, [...ignoreDependenciesSet])
     }
     return baseFilter
   }
