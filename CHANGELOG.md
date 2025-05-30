@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.1.12
+
+[compare changes](https://github.com/laoer536/minip/compare/v0.1.11...v0.1.12)
+
+### 🩹 Fixes
+
+- Files rule matching ([f1b5743](https://github.com/laoer536/minip/commit/f1b5743))
+- Files rule matching ([65b8842](https://github.com/laoer536/minip/commit/65b8842))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.11
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.10...v0.1.11)
