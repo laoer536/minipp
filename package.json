@@ -3,10 +3,6 @@
   "version": "0.1.13",
   "description": "Quickly help you find files that are not being used in your project, and slim down your project.",
   "type": "module",
-  "exports": {
-    "types": "./dist/index.d.mts",
-    "default": "./dist/index.mjs"
-  },
   "types": "./dist/index.d.mts",
   "bin": {
     "minipp": "./dist/core/cli/index.mjs"
@@ -22,9 +18,25 @@
     "lint": "eslint . --ext .ts",
     "release": "pnpm build && changelogen --release && npm publish && git push --follow-tags"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": "https://github.com/laoer536/minipp.git",
+  "homepage": "https://github.com/laoer536/minipp#readme",
+  "bugs": "https://github.com/laoer536/minipp/issues",
+  "keywords": [
+    "unused-files",
+    "dead-code",
+    "dead-dependencies",
+    "frontend",
+    "web-development",
+    "build-optimization",
+    "code-cleanup",
+    "file-tracking",
+    "project-cleanup"
+  ],
+  "author": {
+    "name": "laoer536",
+    "url": "https://neo-liu.netlify.app/"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@swc/cli": "^0.7.7",
     "@types/node": "^20.11.24",
