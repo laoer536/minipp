@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.15
+
+[compare changes](https://github.com/laoer536/minipp/compare/v0.1.14...v0.1.15)
+
+### 🩹 Fixes
+
+- Package main ([c21ab1b](https://github.com/laoer536/minipp/commit/c21ab1b))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.14
 
 [compare changes](https://github.com/laoer536/minipp/compare/v0.1.13...v0.1.14)

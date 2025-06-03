@@ -1,6 +1,6 @@
 {
   "name": "minipp",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Quickly help you find files that are not being used in your project, and slim down your project.",
   "type": "module",
   "main": "./dist/index.mjs",
