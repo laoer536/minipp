@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.14
+
+[compare changes](https://github.com/laoer536/minipp/compare/v0.1.13...v0.1.14)
+
+### 📖 Documentation
+
+- Improve project information ([d6b08d1](https://github.com/laoer536/minipp/commit/d6b08d1))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.13
 
 [compare changes](https://github.com/laoer536/minip/compare/v0.1.12...v0.1.13)
