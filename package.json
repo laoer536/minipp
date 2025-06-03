@@ -3,6 +3,7 @@
   "version": "0.1.14",
   "description": "Quickly help you find files that are not being used in your project, and slim down your project.",
   "type": "module",
+  "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "bin": {
     "minipp": "./dist/core/cli/index.mjs"
