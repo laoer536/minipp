@@ -1638,6 +1638,7 @@ export class Index {
     return a
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   visitTsType(n: TsType): TsType {
     throw new Error('Method visitTsType not implemented.')
   }

@@ -147,7 +147,7 @@ export async function loadUserConfig(configPath: string): Promise<MinippConfig> 
   return { ...defaulMinippConfig, ...configExport }
 }
 
-export function defineMinippConfig(minippConfig: MinippConfig) {
+export function defineMinippConfig(minippConfig: MinippConfig = {}) {
   return { ...defaulMinippConfig, ...minippConfig }
 }
 

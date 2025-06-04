@@ -15,8 +15,9 @@
     "build": "unbuild --minify",
     "dev": "tsx src/core/cli/index.ts",
     "start": "node ./dist/index.mjs",
-    "clean": "rimraf dist",
     "lint": "eslint . --ext .ts",
+    "test": "pnpm lint && pnpm test:types && vitest run --coverage",
+    "test:types": "tsc --noEmit --skipLibCheck",
     "release": "pnpm build && changelogen --release && npm publish && git push --follow-tags"
   },
   "repository": "https://github.com/laoer536/minipp.git",
@@ -43,6 +44,7 @@
     "@types/node": "^20.11.24",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
+    "@vitest/coverage-v8": "3.2.1",
     "changelogen": "^0.6.1",
     "eslint": "^8.57.0",
     "glob": "^11.0.2",
@@ -51,6 +53,7 @@
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "unbuild": "^3.5.0",
+    "vitest": "^3.2.1",
     "yocto-spinner": "^0.2.3"
   },
   "dependencies": {
