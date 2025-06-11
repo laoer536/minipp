@@ -2,6 +2,8 @@
 
 Quickly identify unused files in your project to help slim down your codebase.
 
+中文文档：https://github.com/laoer536/minipp/blob/main/README.zh.md
+
 > [!WARNING]
 >
 > ⚠️  Currently, only TypeScript projects or frontend React+TS projects are supported. Since the tool focuses on source code files and ignores project configuration files, it will not scan files or folders outside the `src` directory. Requires Node.js version >= 20 to run.
