@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.1.16
+
+[compare changes](https://github.com/laoer536/minipp/compare/v0.1.15...v0.1.16)
+
+### 🚀 Enhancements
+
+- Add time-consuming information ([a845ae3](https://github.com/laoer536/minipp/commit/a845ae3))
+
+### 📖 Documentation
+
+- Docs uodate ([e327292](https://github.com/laoer536/minipp/commit/e327292))
+
+### ✅ Tests
+
+- Test defineMinippConfig ([1f63e09](https://github.com/laoer536/minipp/commit/1f63e09))
+
+### ❤️ Contributors
+
+- LiuJie <1547698569@qq.com>
+
 ## v0.1.15
 
 [compare changes](https://github.com/laoer536/minipp/compare/v0.1.14...v0.1.15)
