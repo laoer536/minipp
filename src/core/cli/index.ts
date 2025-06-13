@@ -24,7 +24,7 @@ async function main() {
   const { projectRoot } = parseArgs()
   console.log('Running minipp from project', projectRoot)
   const { ignoreFiles, ignoreDependencies, needDel } = await loadUserConfig(path.join(projectRoot, 'minipp.config.ts'))
-  console.log(`User config:`, { needDel, ignoreFiles, ignoreDependencies })
+  console.log(`Your config:`, { needDel, ignoreFiles, ignoreDependencies })
   let ignoreFilesSet: Set<string> | undefined
   let ignoreDependenciesSet: Set<string> | undefined
   if (ignoreFiles && ignoreFiles.length > 0) {
@@ -33,6 +33,8 @@ async function main() {
   if (ignoreDependencies && ignoreDependencies.length > 0) {
     ignoreDependenciesSet = new Set<string>(ignoreDependencies)
   }
+
+  console.time('Scanning time-consuming')
 
   /**
    * Step1
@@ -95,6 +97,8 @@ async function main() {
       `The export report is complete, and the execution is complete! The report path is located at: ${styleText('yellow', minippJsonPath)}`,
     ),
   )
+
+  console.timeEnd('Scanning time-consuming')
 
   // 执行删除文件操作
   if (needDel) {
