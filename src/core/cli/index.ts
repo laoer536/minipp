@@ -15,8 +15,8 @@ import {
   parseArgs,
   supportFileTypes,
 } from '../common'
-import { jsLike } from '../processors/js-like.ts'
-import { styleLike } from '../processors/style-like.ts'
+import { jsLike } from '../processors/js-like'
+import { styleLike } from '../processors/style-like'
 import { createInterface } from 'readline/promises'
 import { stdin as input, stdout as output } from 'process'
 
